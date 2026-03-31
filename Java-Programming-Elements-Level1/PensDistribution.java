@@ -7,14 +7,14 @@
 // I/P => NONE 
 // O/P => The Pen Per Student is ___ and the remaining pen not distributed is ___ 
 
-public class PensDistribution {
-public static void main(String[] args) {
-    int totalPens = 14;
-    int students = 3;
+// public class PensDistribution {
+// public static void main(String[] args) {
+//     int totalPens = 14;
+//     int students = 3;
     
-    int pensPerStudent = totalPens / students; // Division Operator
-    int remainingPens = totalPens % students; // Modulus Operator
+//     int pensPerStudent = totalPens / students; // Division Operator
+//     int remainingPens = totalPens % students; // Modulus Operator
     
-    System.out.println("The Pen Per Student is " + pensPerStudent + " and the remaining pen not distributed is " + remainingPens);
-}
-}
+//     System.out.println("The Pen Per Student is " + pensPerStudent + " and the remaining pen not distributed is " + remainingPens);
+// }
+// }
