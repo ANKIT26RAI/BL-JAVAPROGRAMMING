@@ -11,7 +11,6 @@
 import java.util.Scanner;
 public class Calculator {
     public static void main(String[] args) {
-        double number1, number2;
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the first number: ");
         double num1 = sc.nextDouble();
