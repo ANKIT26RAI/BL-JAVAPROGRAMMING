@@ -23,5 +23,6 @@ public class StudentFees {
         double discountedFee = fee - discount;
         
         System.out.println("The discount amount is INR " + discount + " and final discounted fee is INR " + discountedFee);
+        sc.close();
     }
 }
