@@ -247,10 +247,10 @@ import java.util.Scanner;
 // }
 
 //Find number of words in a String using Regular Expressions:
-public class StringPrinting {
-    public static void main(String[] args) {
-        String str = "Hello, World! Welcome to Java programming.";
-        String[] words = str.split("\\s+"); // Split the string into words based on whitespace
-        System.out.println("Number of words: " + words.length); // Output: Number of words: 6
-    }
-}
+// public class StringPrinting {
+//     public static void main(String[] args) {
+//         String str = "Hello, World! Welcome to Java programming.";
+//         String[] words = str.split("\\s+"); // Split the string into words based on whitespace
+//         System.out.println("Number of words: " + words.length); // Output: Number of words: 6
+//     }
+// }
