@@ -246,7 +246,7 @@ import java.util.Scanner;
 //     }
 // }
 
-//Find number of words in a String using Regular Expressions:
+// Find number of words in a String using Regular Expressions:
 // public class StringPrinting {
 //     public static void main(String[] args) {
 //         String str = "Hello, World! Welcome to Java programming.";
@@ -254,3 +254,5 @@ import java.util.Scanner;
 //         System.out.println("Number of words: " + words.length); // Output: Number of words: 6
 //     }
 // }
+
+//THATS ALL FOR TODAY. SEE YOU IN THE NEXT CLASS.
