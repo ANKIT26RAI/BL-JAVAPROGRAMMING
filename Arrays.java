@@ -546,3 +546,120 @@
         
 //     }
 // }
+
+
+//Find the pair of elements in an array whose sum is equal to a given target value
+// import java.util.Scanner;
+// public class Arrays {
+
+//     public static void main(String[] args) {
+//         Scanner sc = new Scanner(System.in);
+//         System.out.print("Enter the length of arr : ");
+//         int n = sc.nextInt();
+//         int[] arr = new int[n];
+//         for(int i=0;i<n;i++){
+//             arr[i]=sc.nextInt();
+//         }
+//         System.out.print("Enter the target value : ");
+//         int k = sc.nextInt();
+//         boolean found = false;
+//         for(int i=0;i<n-1;i++){
+//             for(int j=i+1;j<n;j++){
+//                 if(arr[i]+arr[j]==k){
+//                     System.out.print("Pair : "+ "( "+arr[i] +" , "+arr[j]+" )");
+//                     found = true;
+//                 }
+//             }
+//         }
+//         if(!found){
+//             System.out.print("No pair found with the given target value.");
+//         }
+//         sc.close();
+//     }
+// }
+
+//Find Transpose of a matrix
+// import java.util.Scanner;
+// public class Arrays{
+//     public static void main(String[] args) {
+//         Scanner sc = new Scanner(System.in);
+//         System.out.print("Enter the number of rows  : ");
+//         int rows = sc.nextInt();
+//         System.out.print("Enter the number of columns : ");
+//         int cols= sc.nextInt();
+//         int[][] arr = new int[rows][cols];
+//         System.out.println("Enter the elements of Matrix : " );
+//         for(int i = 0;i<rows;i++){
+//             for(int j=0;j<cols;j++){
+//                 arr[i][j] = sc.nextInt();
+//             }
+//         }
+
+//         int[][] trans = new int[cols][rows];
+//         for(int i =0;i<rows;i++){
+//             for(int j=0;j<cols;j++){
+//                 trans[j][i]=arr[i][j];
+//             }
+//         }
+        
+//         System.out.println("Transpose of the matrix is : ");
+//         for(int i=0;i<cols;i++){
+//             for(int j=0;j<rows;j++){
+//                 System.out.print(trans[i][j] + " ");    
+//             }
+//             System.out.println();
+//         }
+//         sc.close();
+//     }
+// }
+
+//Multiply two matrices
+// import java.util.Scanner;
+// public class Arrays{
+//     public static void main(String[] args) {
+//         Scanner sc = new Scanner(System.in);
+//         System.out.print("Enter the number of rows of matrix 1 : ");
+//         int rows1 = sc.nextInt();
+//         System.out.print("Enter the number of columns of matrix 1 : ");
+//         int cols1 = sc.nextInt();
+//         int[][] matrix1 = new int[rows1][cols1];
+//         System.out.println("Enter the elements of matrix 1 : ");
+//         for(int i=0;i<rows1;i++){
+//             for(int j=0;j<cols1;j++){
+//                 matrix1[i][j]=sc.nextInt();
+//             }
+//         }
+//         System.out.print("Enter the number of rows of matrix 2 : ");
+//         int rows2 = sc.nextInt();   
+//         System.out.print("Enter the number of columns of matrix 2 : ");
+//         int cols2 = sc.nextInt();
+//         if(cols1!=rows2){
+//             System.out.print("Matrix multiplication is not possible.");
+//             sc.close();
+//             return;
+//         }
+//         int[][] matrix2 = new int[rows2][cols2];
+//         System.out.println("Enter the elements of matrix 2 : ");
+//         for(int i=0;i<rows2;i++){
+//             for(int j=0;j<cols2;j++){
+//                 matrix2[i][j]=sc.nextInt();
+//             }
+//         }
+//         int[][] result = new int[rows1][cols2];
+//         for(int i=0;i<rows1;i++){
+//             for(int j=0;j<cols2;j++){
+//                 for(int k=0;k<cols1;k++){
+//                     result[i][j]+=matrix1[i][k]*matrix2[k][j];
+//                 }
+//             }
+//         }
+//         System.out.println("Result of matrix multiplication is : ");
+//         for(int i=0;i<rows1;i++){
+//             for(int j=0;j<cols2;j++){
+//                 System.out.print(result[i][j] + " ");
+//             }
+//             System.out.println();
+//         }
+//         sc.close();
+//     }
+// }
