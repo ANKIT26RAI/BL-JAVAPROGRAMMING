@@ -14,7 +14,7 @@ public class Age{
             }else if(arr[i]>=18){
                 System.out.println("The student with the age "+ arr[i]+" can vote. ");
             }else{
-                System.out.println("The student with the age "+arr[i]+" cannot vote ");
+                System.out.println("The student with the age "+arr[i]+" can't vote ");
             }
         }
         sc.close();
