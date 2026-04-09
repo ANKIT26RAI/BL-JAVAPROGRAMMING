@@ -18,10 +18,10 @@ static int length(String str){
     String[] Unique = new String[length(str)];
     int n= length(str);
     int index = 0;
-        for(int i=0;i<n-1;i++){
+        for(int i=0;i<n;i++){
         boolean isUnique=true;
-        for(int j=i+1;j<n;j++){
-            if(str.charAt(i)==str.charAt(j)){
+        for(int j=0;j<n;j++){
+            if((i!=j) && (str.charAt(i)==str.charAt(j))){
                 isUnique = false;
                 break;
             }       
