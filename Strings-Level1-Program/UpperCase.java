@@ -19,9 +19,9 @@ static boolean Compare(String s1,String s2){
     public static void main(String[] args) {
      Scanner sc = new Scanner(System.in);
      String text = sc.next();
-     String str2= toUpperCase(text);
-     System.out.println("UpperCase :"+ str2);
-     System.out.println("Equals :"+ Compare(text, str2));
+     String str2= text.toUpperCase();
+     String str1 = toUpperCase(text);
+     System.out.println("Equals :"+ Compare(str1, str2));
     }
     
 }
