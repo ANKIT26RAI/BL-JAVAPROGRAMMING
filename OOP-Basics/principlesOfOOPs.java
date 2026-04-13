@@ -6,6 +6,8 @@ import java.util.Scanner;
 //4. Polymorphism (Generalization): It is the ability of an object to take on many forms. It allows objects of different classes to be treated as objects of a common superclass. It is achieved through method overriding and method overloading.  
 import java.util.concurrent.CyclicBarrier;
 
+import org.w3c.dom.css.Rect;
+
 //Difference between class and object.
 //Anything in the world you can called is an Object.
 //In OOPS, we define Object in terms of its proerties and behaviors.
@@ -230,62 +232,246 @@ import java.util.concurrent.CyclicBarrier;
 
 //Data Hiding : It is the process of hiding the internal details and showing only the required features of an object. It is achieved through access modifiers (private, protected, public) and getter/setter methods. It helps to protect the data from unauthorized access and modification.   
 //How to hide data in Java?
-class Account{
-    private long accountNumber;
+// class Account{
+//     private long accountNumber;
+//     private String name;
+//     private double balance;
+//     //for accessing the private data members, we need to create getter and setter methods.
+//     public long getAccountNumber(){
+//         return accountNumber;
+//     }
+//     public String getName(){
+//         return name;
+//     }
+//     public double getBalance(){
+//         return balance;
+//     }
+//     public void setAccountNumber(long accountNumber){
+//         this.accountNumber=accountNumber;
+//     }
+//     public void setName(String name){
+//         this.name=name;
+//     }
+//     public void setBalance(double balance){
+//         this.balance=balance;
+//     }
+//     public double deposit(double amt){
+//         balance+=amt;
+//         return balance;
+//     }
+//     public double withdraw(double amt){
+//         if(amt>balance){
+//             System.out.println("Insufficient balance");
+//             return balance;
+//         }
+//         balance-=amt;
+//         return balance;
+//     }
+// }
+// public class principlesOfOOPs{
+//     public static void main(String[] args) {
+//         Scanner sc = new Scanner(System.in);
+//         Account a1 = new Account();
+//         System.out.println("---------Enter the details of account 1---------");
+//         a1.setAccountNumber(sc.nextLong());
+//         a1.setName(sc.next());
+//         a1.setBalance(sc.nextDouble());
+
+//         System.out.println("-----Account 1------");
+//         System.out.println("Account Number : "+a1.getAccountNumber());
+//         System.out.println("Name : "+a1.getName());
+//         System.out.println("Balance : "+a1.getBalance());
+
+//         System.out.println("Enter the amount to deposit : ");
+//         double amt = sc.nextDouble();
+//         System.out.println("Balance after deposit : "+a1.deposit(amt));
+
+//         System.out.println("Enter the amount to withdraw : ");
+//         amt = sc.nextDouble();
+//         System.out.println("Balance after withdrawal : "+a1.withdraw(amt));
+//     }
+// }
+
+//Type of Prorpeties :  
+//1.Read & Writable Properties : These properties can be read and modified by the user. They have both getter and setter methods. Example: name, age, address, etc.
+//2.Read-Only Properties : These properties can only be read by the user and cannot be modified. They have only getter methods and no setter methods. Example: roll number, date of birth, etc.
+//3.Write-Only Properties : These properties can only be modified by the user and cannot be read. They have only setter methods and no getter methods. Example: password, etc.
+ //Practice Questions Data hiding : 
+//class Rectangle{
+//     private double length;
+//     private double breadth;
+//     public double getLength(){
+//         return length;
+//     }
+//     public double getBreadth(){
+//         return breadth;
+//     }
+//     public void setLength(double length){
+//         this.length=length;
+//     }
+//     public void setBreadth(double breadth){
+//         this.breadth=breadth;
+//     }    
+//   public double area(){
+//         return length * breadth;
+//     }
+//     public double perimeter(){
+//         return 2 * (length + breadth);
+//     }
+//     public boolean isSquare(){
+//         if(length==breadth)
+//             return true;
+//         return false;
+
+//     }
+// }    
+//public class principlesOfOOPs{
+//     public static void main(String[] args) { 
+//         Scanner sc = new Scanner(System.in);
+//         Rectangle r1 = new Rectangle();  
+//         System.out.println("-------------Enter the length and breadth of rectangle 1--------");
+//         r1.setLength( sc.nextDouble());
+//         r1.setBreadth( sc.nextDouble());
+//        System.out.println("----------Rectangle R1 ------------");
+//         System.out.println("Area : "+ r1.area());
+//         System.out.println("Perimeter : "+ r1.perimeter());
+//         System.out.println("isSquare : "+r1.isSquare());
+//     }
+
+//Constructors.
+//A constructor is a special method that is used to initialize the objects of a class. It is called when an object of a class is created. It has the same name as the class and does not have a return type. It can be used to set the initial values of the properties of an object. It can also be used to perform any other initialization tasks that are required when an object is created.
+//Types of Constructors :   
+//1.Default Constructor : It is a constructor that takes no arguments. It is provided by the compiler if no constructor is defined in the class. It initializes the properties of an object to their default values (0 for numeric types, null for reference types, etc.).
+//2.Parameterized Constructor : It is a constructor that takes arguments. It is used to initialize the properties of an object with specific values provided by the user. It allows us to create objects with different initial values.
+//3.Copy Constructor : It is a constructor that takes an object of the same class as an argument. It is used to create a new object that is a copy of an existing object. It initializes the properties of the new object with the values of the properties of the existing object. It is used to create a new object that is a copy of an existing object.
+//4.Static Constructor : It is a constructor that is used to initialize the static properties of a  class. It is called only once when the class is loaded into memory. It is used to initialize the static properties of a class. It is used to perform any other initialization tasks that are required when the class is loaded into memory. It is defined using the static keyword and does not have a return type. It cannot be called directly, but it is called automatically by the Java runtime when the class is loaded into memory. It is used to initialize the static properties of a class and to perform any other initialization tasks that are required when the class is loaded into memory.
+//Constructor is a method of a class which is called whenever object is created.
+//when i was created a object constructor is called.
+//Every class in Java have their own default constructor.
+//Constructor will have same name as class name.
+//It doesn't have return type.
+//Constructors are usually declared as public.
+//when we defined Constructors and give parameters it is called parameterized constructor.
+//if we create constructor without any parameter it is replacement of default constructor.
+//Constructors are overloaded means we can write as many constructors we want name should be same but parameter different.
+// class Rectangle{
+//     private double length;
+//     private double breadth;
+
+//     public Rectangle(){
+//        setLength(length);
+//        setBreadth(breadth);
+//     }
+//     public Rectangle(double l,double b){
+//         setBreadth(1);
+//         setLength(1);
+//     }
+//     public Rectangle(double s){
+//         setBreadth(s);
+//         setLength(s);
+//     }
+//     public double getLength(){
+//         return length;
+//     }
+//     public double getBreadth(){
+//         return breadth;
+//     }
+//     public void setLength(double l){
+//         if(l>0){
+//             length=l;
+//         }else{
+//             length=1;
+//         }
+    
+//     }
+//     public void setBreadth(double b){
+//         if(b>0){
+//         breadth=b;
+//         }else{breadth=1;}
+//     }
+//     public double area(){
+//         return getLength()*getBreadth();
+//     }
+//     public double perimeter(){
+//         return 2*(length+breadth);
+//     }
+
+// }
+
+// public class principlesOfOOPs {
+
+//     public static void main(String[] args) {
+//         Scanner sc = new Scanner(System.in);
+//         Rectangle r1=new Rectangle();
+//         Rectangle r2 = new Rectangle(10,5);
+//         Rectangle r3 = new Rectangle(-10); 
+//         System.out.println("Area :" +r3.area());
+//     }
+// }
+
+//Properties and Constructors.
+//Array of Objects.
+class Subject{
+    private int subId;
     private String name;
-    private double balance;
-    //for accessing the private data members, we need to create getter and setter methods.
-    public long getAccountNumber(){
-        return accountNumber;
+    private double maxMarks;
+    private double marksObtained;
+
+    public int getsubId(){
+        return subId;
     }
-    public String getName(){
+    public String getname(){
         return name;
     }
-    public double getBalance(){
-        return balance;
+    public double getmaxMarks(){
+        return maxMarks;
     }
-    public void setAccountNumber(long accountNumber){
-        this.accountNumber=accountNumber;
+    public double getmarksObtained(){
+        return marksObtained;
     }
-    public void setName(String name){
-        this.name=name;
+    
+    public void setmaxMarks(double max){
+       if(max>0){maxMarks=max;}else{maxMarks=100;}
     }
-    public void setBalance(double balance){
-        this.balance=balance;
+    public void setmarksObtained(double marks){
+        if (marks >= 0 && marks <= maxMarks) marksObtained = marks;
+        else marksObtained = 0;
     }
-    public double deposit(double amt){
-        balance+=amt;
-        return balance;
+    public Subject(int id,String n,double max,double marks){
+    
+        subId =id;
+        name =n;
+        setmaxMarks(max);
+        setmarksObtained(marks);
     }
-    public double withdraw(double amt){
-        if(amt>balance){
-            System.out.println("Insufficient balance");
-            return balance;
-        }
-        balance-=amt;
-        return balance;
+    public boolean isQualified(){
+        return marksObtained>=(maxMarks/100)*40;
     }
+
 }
-public class principlesOfOOPs{
+public class principlesOfOOPs {
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Account a1 = new Account();
-        System.out.println("---------Enter the details of account 1---------");
-        a1.setAccountNumber(sc.nextLong());
-        a1.setName(sc.next());
-        a1.setBalance(sc.nextDouble());
+        System.out.println("Enter the number of subjects");
+        int n = sc.nextInt();
+        Subject[] sub = new Subject[n];
+        for(int i=0;i<n;i++){
+            System.out.println("------Subject "+(i+1)+ " --------");
+            System.out.println("Enter Subject ID : ");int id = sc.nextInt();
+            System.out.println("Enter subject name : "); String name = sc.next();
+            System.out.println("Enter the Max Marks : "); double max = sc.nextDouble();
+            System.out.println("Enter the Marks Scored : ");double marks = sc.nextDouble();
+            sub[i]=new Subject(id, name, max, marks);
+        }
+        System.out.println("\n--------Results--------");
+        for(int i=0;i<n;i++){
+            System.out.println("Subject : "+sub[i].getname());
+            System.out.println("Marks : "+sub[i].getmarksObtained());
+            System.out.println("Status : "+sub[i].isQualified());
+            System.out.println();
 
-        System.out.println("-----Account 1------");
-        System.out.println("Account Number : "+a1.getAccountNumber());
-        System.out.println("Name : "+a1.getName());
-        System.out.println("Balance : "+a1.getBalance());
-
-        System.out.println("Enter the amount to deposit : ");
-        double amt = sc.nextDouble();
-        System.out.println("Balance after deposit : "+a1.deposit(amt));
-
-        System.out.println("Enter the amount to withdraw : ");
-        amt = sc.nextDouble();
-        System.out.println("Balance after withdrawal : "+a1.withdraw(amt));
+        }
+        sc.close();
     }
 }
