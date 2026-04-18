@@ -411,67 +411,67 @@ import org.w3c.dom.css.Rect;
 
 //Properties and Constructors.
 //Array of Objects.
-class Subject{
-    private int subId;
-    private String name;
-    private double maxMarks;
-    private double marksObtained;
+// class Subject{
+//     private int subId;
+//     private String name;
+//     private double maxMarks;
+//     private double marksObtained;
 
-    public int getsubId(){
-        return subId;
-    }
-    public String getname(){
-        return name;
-    }
-    public double getmaxMarks(){
-        return maxMarks;
-    }
-    public double getmarksObtained(){
-        return marksObtained;
-    }
+//     public int getsubId(){
+//         return subId;
+//     }
+//     public String getname(){
+//         return name;
+//     }
+//     public double getmaxMarks(){
+//         return maxMarks;
+//     }
+//     public double getmarksObtained(){
+//         return marksObtained;
+//     }
     
-    public void setmaxMarks(double max){
-       if(max>0){maxMarks=max;}else{maxMarks=100;}
-    }
-    public void setmarksObtained(double marks){
-        if (marks >= 0 && marks <= maxMarks) marksObtained = marks;
-        else marksObtained = 0;
-    }
-    public Subject(int id,String n,double max,double marks){
+//     public void setmaxMarks(double max){
+//        if(max>0){maxMarks=max;}else{maxMarks=100;}
+//     }
+//     public void setmarksObtained(double marks){
+//         if (marks >= 0 && marks <= maxMarks) marksObtained = marks;
+//         else marksObtained = 0;
+//     }
+//     public Subject(int id,String n,double max,double marks){
     
-        subId =id;
-        name =n;
-        setmaxMarks(max);
-        setmarksObtained(marks);
-    }
-    public boolean isQualified(){
-        return marksObtained>=(maxMarks/100)*40;
-    }
+//         subId =id;
+//         name =n;
+//         setmaxMarks(max);
+//         setmarksObtained(marks);
+//     }
+//     public boolean isQualified(){
+//         return marksObtained>=(maxMarks/100)*40;
+//     }
 
-}
-public class principlesOfOOPs {
+// }
+// public class principlesOfOOPs {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the number of subjects");
-        int n = sc.nextInt();
-        Subject[] sub = new Subject[n];
-        for(int i=0;i<n;i++){
-            System.out.println("------Subject "+(i+1)+ " --------");
-            System.out.println("Enter Subject ID : ");int id = sc.nextInt();
-            System.out.println("Enter subject name : "); String name = sc.next();
-            System.out.println("Enter the Max Marks : "); double max = sc.nextDouble();
-            System.out.println("Enter the Marks Scored : ");double marks = sc.nextDouble();
-            sub[i]=new Subject(id, name, max, marks);
-        }
-        System.out.println("\n--------Results--------");
-        for(int i=0;i<n;i++){
-            System.out.println("Subject : "+sub[i].getname());
-            System.out.println("Marks : "+sub[i].getmarksObtained());
-            System.out.println("Status : "+sub[i].isQualified());
-            System.out.println();
+//     public static void main(String[] args) {
+//         Scanner sc = new Scanner(System.in);
+//         System.out.println("Enter the number of subjects");
+//         int n = sc.nextInt();
+//         Subject[] sub = new Subject[n];
+//         for(int i=0;i<n;i++){
+//             System.out.println("------Subject "+(i+1)+ " --------");
+//             System.out.println("Enter Subject ID : ");int id = sc.nextInt();
+//             System.out.println("Enter subject name : "); String name = sc.next();
+//             System.out.println("Enter the Max Marks : "); double max = sc.nextDouble();
+//             System.out.println("Enter the Marks Scored : ");double marks = sc.nextDouble();
+//             sub[i]=new Subject(id, name, max, marks);
+//         }
+//         System.out.println("\n--------Results--------");
+//         for(int i=0;i<n;i++){
+//             System.out.println("Subject : "+sub[i].getname());
+//             System.out.println("Marks : "+sub[i].getmarksObtained());
+//             System.out.println("Status : "+sub[i].isQualified());
+//             System.out.println();
 
-        }
-        sc.close();
-    }
-}
+//         }
+//         sc.close();
+//     }
+// }
