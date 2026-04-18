@@ -6,28 +6,68 @@
 //3. Local Inner Class  
 //4. Anonymous Inner Class
 //Nested Inner class.
-class OuterClass {
-    int outerField = 10;
+// class OuterClass {
+//     int outerField = 10;
 
-    class InnerClass {
-        int innerField = 20;
-        void display() {
-            System.out.println("Outer field: " + outerField);
-            System.out.println("Inner field: " + innerField);
-        }
-    }
-    void outerDisplay() {
-        InnerClass inner = new InnerClass();
-        inner.display();
-        System.out.println("Accessing inner field from outer class: " + inner.innerField);  
-    }
-}
-public class InnerClass {
-public static void main(String[] args) {
-    OuterClass outer = new OuterClass();
-    outer.outerDisplay();   
-    OuterClass.InnerClass inner = outer.new InnerClass(); // Creating an instance of the inner class
-    inner.display(); // Calling the display method of the inner class   
-}
+//     class InnerClass {
+//         int innerField = 20;
+//         void display() {
+//             System.out.println("Outer field: " + outerField);
+//             System.out.println("Inner field: " + innerField);
+//         }
+//     }
+//     void outerDisplay() {
+//         InnerClass inner = new InnerClass();
+//         inner.display();
+//         System.out.println("Accessing inner field from outer class: " + inner.innerField);  
+//     }
+// }
+// public class InnerClass {
+// public static void main(String[] args) {
+//     OuterClass outer = new OuterClass();
+//     outer.outerDisplay();   
+//     OuterClass.InnerClass inner = outer.new InnerClass(); // Creating an instance of the inner class
+//     inner.display(); // Calling the display method of the inner class   
+// }
     
-}
+// }
+
+//Local Inner class
+// class OuterClass {
+//     void outerMethod() {
+//         class LocalInnerClass {
+//             void display() {
+//                 System.out.println("This is a local inner class.");
+//             }
+//         }
+//         LocalInnerClass localInner = new LocalInnerClass();
+//         localInner.display();
+//     }
+// }
+
+//Anonymous Inner class
+// interface Greeting {
+//     void sayHello();
+// }
+// public class InnerClass {
+//     public static void main(String[] args) {
+//         Greeting greeting = new Greeting() {
+//             @Override
+//             public void sayHello() {
+//                 System.out.println("Hello, this is an anonymous inner class!");
+//             }
+//         };
+//         greeting.sayHello();
+//     }
+// }
+
+//Static Inner class   
+// class OuterClass {
+//     static int outerStaticField = 30;
+
+//     static class StaticInnerClass {
+//         void display() {
+//             System.out.println("Outer static field: " + outerStaticField);
+//         }
+//     }
+// }
