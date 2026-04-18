@@ -41,58 +41,76 @@ import java.util.Scanner;
 //Do_s and Don'ts of Interface in Java?
 
 //SmartPhone example of Interface in Java
-class Phone{
-    void call(){
-        System.out.println("Calling...");
-    }
-    void message(){
-        System.out.println("Messaging...");
-    }
-}
-interface Camera{
-    void click();
-    void record();
-}
-interface MusicPlayer{
-    void play();
-    void pause();
-    void stop();
-}
-class SmartPhone extends Phone implements Camera, MusicPlayer{
-    public void click(){
-        System.out.println("Clicking...");
-    }
-    public void record(){
-        System.out.println("Recording...");
-    }
-    public void play(){
-        System.out.println("Playing music...");
-    }
-    public void pause(){
-        System.out.println("Pausing music...");
-    }
-    public void stop(){
-        System.out.println("Stopping music...");
-    }
-    public void videoCall(){
-        System.out.println("Video calling...");
-    }
-    public void browse(){
-        System.out.println("Browsing...");
-    }
-}
-public class Interface {
+// class Phone{
+//     void call(){
+//         System.out.println("Calling...");
+//     }
+//     void message(){
+//         System.out.println("Messaging...");
+//     }
+// }
+// interface Camera{
+//     void click();
+//     void record();
+// }
+// interface MusicPlayer{
+//     void play();
+//     void pause();
+//     void stop();
+// }
+// class SmartPhone extends Phone implements Camera, MusicPlayer{
+//     public void click(){
+//         System.out.println("Clicking...");
+//     }
+//     public void record(){
+//         System.out.println("Recording...");
+//     }
+//     public void play(){
+//         System.out.println("Playing music...");
+//     }
+//     public void pause(){
+//         System.out.println("Pausing music...");
+//     }
+//     public void stop(){
+//         System.out.println("Stopping music...");
+//     }
+//     public void videoCall(){
+//         System.out.println("Video calling...");
+//     }
+//     public void browse(){
+//         System.out.println("Browsing...");
+//     }
+// }
+// public class Interface {
 
-    public static void main(String[] args) {
-        SmartPhone sp = new SmartPhone();
-        sp.call();
-        sp.message();
-        sp.click();
-        sp.record();
-        sp.play();
-        sp.pause();
-        sp.stop();
-        sp.videoCall();
-        sp.browse();
-    }
-}
+//     public static void main(String[] args) {
+//         SmartPhone sp = new SmartPhone();
+//         sp.call();
+//         sp.message();
+//         sp.click();
+//         sp.record();
+//         sp.play();
+//         sp.pause();
+//         sp.stop();
+//         sp.videoCall();
+//         sp.browse();
+//     }
+// }
+
+//STUDENT CHALLENGE:
+//A retail store management system uses a callback interface to notify its members about upcoming sales.
+
+//DO_s and DON'Ts of Interface in Java:
+//DOs:
+//1. Use interfaces to define a common interface for unrelated classes.
+//2. Use interfaces to achieve multiple inheritance in Java.
+//3. Use default methods in interfaces to provide a default implementation for methods that can be overridden by implementing classes.
+//4. Use static methods in interfaces to define utility methods that can be called without an instance of the interface.
+//DON'Ts:
+//1. Don't create objects of interfaces directly, as they cannot be instantiated.   
+//2. Don't define instance variables in interfaces, as they can only contain static constants.
+//3. Don't define concrete methods (methods with a body) in interfaces, as they can only contain abstract methods (methods without a body) and default methods (methods with a body that can be overridden by implementing classes).    
+//4. Don't use interfaces if you do not need to define a common interface for unrelated classes or if you do not need to achieve multiple inheritance in Java, as this can lead to unnecessary complexity in your code. 
+
+//Multiple inheritance vs Interface in Java:
+//Multiple inheritance is a feature of object-oriented programming languages in which a class can inherit from more than one parent class. This can lead to ambiguity and conflicts when two parent classes have methods with the same name. In contrast, interfaces in Java allow for multiple inheritance without the issues of ambiguity and conflicts, as a class can implement multiple interfaces without inheriting any implementation from them. This promotes code reusability and flexibility in designing classes.   
