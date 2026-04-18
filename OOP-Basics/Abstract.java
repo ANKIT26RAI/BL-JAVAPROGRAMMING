@@ -37,48 +37,123 @@ import java.util.Scanner;
 //Why we need Abstract class in Java?
 //Real life example of Abstract class in Java?
 //Abstract classes are useful in Java for several reasons:
-abstract class Hospital {
-    abstract void doctor();
-    abstract void nurse();
-    abstract void patient();
-    abstract void ambulance();
-    abstract void operation();
-    abstract void pharmacy();
-    abstract void medicine();
-}
-class MyHospital extends Hospital{
-    void doctor(){
-        System.out.println("Doctor is available in the hospital");
-    }
-    void nurse(){
-        System.out.println("Nurse is available in the hospital");
-    }
-    void patient(){
-        System.out.println("Patient is available in the hospital");
-    }
-    void ambulance(){
-        System.out.println("Ambulance is available in the hospital");
-    }
-    void operation(){
-        System.out.println("Operation is available in the hospital");
-    }
-    void pharmacy(){
-        System.out.println("Pharmacy is available in the hospital");
-    }
-    void medicine(){
-        System.out.println("Medicine is available in the hospital");
-    }
-}
-public class Abstract {
+// abstract class Hospital {
+//     abstract void doctor();
+//     abstract void nurse();
+//     abstract void patient();
+//     abstract void ambulance();
+//     abstract void operation();
+//     abstract void pharmacy();
+//     abstract void medicine();
+// }
+// class MyHospital extends Hospital{
+//     void doctor(){
+//         System.out.println("Doctor is available in the hospital");
+//     }
+//     void nurse(){
+//         System.out.println("Nurse is available in the hospital");
+//     }
+//     void patient(){
+//         System.out.println("Patient is available in the hospital");
+//     }
+//     void ambulance(){
+//         System.out.println("Ambulance is available in the hospital");
+//     }
+//     void operation(){
+//         System.out.println("Operation is available in the hospital");
+//     }
+//     void pharmacy(){
+//         System.out.println("Pharmacy is available in the hospital");
+//     }
+//     void medicine(){
+//         System.out.println("Medicine is available in the hospital");
+//     }
+// }
+// public class Abstract {
 
-    public static void main(String[] args) {
-        Hospital h = new MyHospital();
-        h.doctor();
-        h.nurse();
-        h.patient();
-        h.ambulance();
-        h.operation();
-        h.pharmacy();
-        h.medicine();
-    }
-}
+//     public static void main(String[] args) {
+//         Hospital h = new MyHospital();
+//         h.doctor();
+//         h.nurse();
+//         h.patient();
+//         h.ambulance();
+//         h.operation();
+//         h.pharmacy();
+//         h.medicine();
+//     }
+// }
+
+// abstract class KFC{
+//     KFC(){
+//         System.out.println("KFC constructor");
+//     }
+//     void welcome(){
+//         System.out.println("Welcome to KFC");
+//     }
+//     void menu(){
+//         System.out.println("Menu is available in KFC");
+//     }
+//     void order(){
+//         System.out.println("Order is available in KFC");
+//     }
+//     abstract void billing();
+//     abstract void payment();
+//     abstract void delivery();
+//     abstract void feedback();
+//     abstract void offers();
+
+// }
+// class MyKFC extends KFC{
+//     void billing(){
+//         System.out.println("Billing is available in KFC");
+//     }
+//     void payment(){
+//         System.out.println("Payment is available in KFC");
+//     }
+//     void delivery(){
+//         System.out.println("Delivery is available in KFC");
+//     }
+//     void feedback(){
+//         System.out.println("Feedback is available in KFC");
+//     }
+//     void offers(){
+//         System.out.println("Offers are available in KFC");
+//     }
+//     void festivalOffers(){
+//         System.out.println("Festival offers are available in KFC");
+//     }
+// }   
+// public class Abstract {
+
+//     public static void main(String[] args) {
+//         KFC k = new MyKFC();
+//         k.welcome();
+//         k.menu();
+//         k.order();
+//         k.billing();
+//         k.payment();
+//         k.delivery();
+//         k.feedback();
+//         k.offers();
+
+//         k.festivalOffers(); // This will give an error because festivalOffers() is not defined in the KFC class
+//     }
+// }
+//STUDENT CHALLENGE
+//Take a class Shape as an abstract class and create three subclasses Circle, Rectangle and Triangle. Each subclass should have its own implementation of the area() method to calculate the area of the shape. Then, create objects of each subclass and call the area() method to display the area of each shape.
+//Do_s and Don'ts of Abstract class in Java
+//Do's of Abstract class in Java:   
+//1. Use abstract classes when you want to provide a common base for related classes and define a common interface for those classes.
+//2. Use abstract methods to define methods that must be implemented by any concrete subclass of the abstract class.
+//3. Use abstract classes to provide a common implementation for related classes, while still allowing for specific implementations in the subclasses.  
+//Don'ts of Abstract class in Java:
+//1. Do not create objects of an abstract class, as it cannot be instantiated.  
+//2. Do not declare a class as abstract if it does not contain any abstract methods, as this can lead to confusion and is not necessary.    
+//3. Do not use abstract classes if you do not need to provide a common base for related classes or if you do not need to define a common interface for those classes, as this can lead to unnecessary complexity in your code. 
+ 
+
+//Rules for Abstract class in Java:
+//1. An abstract class cannot be instantiated, meaning you cannot create an object of an abstract class.
+//2. An abstract class can contain both abstract methods (methods without a body) and concrete methods (methods with a body).
+//3. If a class is declared as abstract, it must be extended by a concrete subclass that provides implementations for all the abstract methods of the abstract class, otherwise the subclass must also be declared as abstract.
+//4. An abstract class can have constructors, but they cannot be used to create objects of the abstract class. Instead, they can be called from the constructors of the concrete subclasses to initialize the state of the object.  
