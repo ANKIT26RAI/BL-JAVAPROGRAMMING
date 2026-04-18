@@ -311,33 +311,74 @@ import java.util.Scanner;
 //Dynamic Method Dispatch is used in Runtime Polymorphism.
 //Runtime Polymorphism is achieved through method overriding and dynamic method dispatch.   
 
-class Super{
-    public void display(){
-        System.out.println("super class display");
-    }
-    public void show(){
-        System.out.println("super class show"); 
-    }
-    public void method(){
-        System.out.println("super class method");
-    }
-}
-class Subclass extends Super{
-    public void display(){
-        System.out.println("subclass display");
-    }
-    public void show(){
-        System.out.println("subclass show");
-    }
-}
-public class Inherit {
+// class Super{
+//     public void display(){
+//         System.out.println("super class display");
+//     }
+//     public void show(){
+//         System.out.println("super class show"); 
+//     }
+//     public void method(){
+//         System.out.println("super class method");
+//     }
+// }
+// class Subclass extends Super{
+//     public void display(){
+//         System.out.println("subclass display");
+//     }
+//     public void show(){
+//         System.out.println("subclass show");
+//     }
+// }
+// public class Inherit {
 
-    public static void main(String[] args) {
-        Super s = new Subclass();
-        s.display(); //subclass display
-        s.show(); //subclass show
-        s.method(); //super class method
-    }
-}
+//     public static void main(String[] args) {
+//         Super s = new Subclass();
+//         s.display(); //subclass display
+//         s.show(); //subclass show
+//         s.method(); //super class method
+//     }
+// }
 
 //A superclass reference can call only those methods which are present in superclass but the actual method which will be called at runtime is determined by the type of object which is referred by superclass reference.   
+//In above example s is a reference of Super class but it is referring to an object of Subclass. So at runtime the display and show method of Subclass will be called because the actual type of object is Subclass. But method method is not overridden in Subclass so the method of Super class will be called.   
+
+//Do_s and Don'ts of Method Overriding.
+//1. The method in subclass must have the same name, return type and parameters as the method in superclass.
+//2. The method in subclass must have the same or more accessibility than the method in superclass. For example if the method in superclass is public then the method in subclass must be public. If the method in superclass is protected then the method in subclass can be protected or public but not private.
+//3. The method in subclass cannot throw a checked exception if the method in superclass does not throw any exception or throws a different checked exception. For example if the method in superclass throws IOException then the method in subclass cannot throw FileNotFoundException because it is a checked exception and it is not a subclass of IOException.
+//4. The method in subclass can throw any unchecked exception regardless of the exceptions thrown by the method in superclass. For example if the method in superclass throws IOException then the method in subclass can throw NullPointerException because it is an unchecked exception.  
+
+
+//Polymorphism : Many forms.One name Different forms. 
+//Compile time Polymorphism : Method Overloading.
+//Runtime Polymorphism : Method Overriding and Dynamic Method Dispatch.
+//Overloading vs Overriding.
+//Overloading is achieved within the same class but overriding is achieved in different classes which are in inheritance relationship.
+//Overloading is resolved at compile time but overriding is resolved at runtime.    
+//Code:
+// class Test{
+//     public int max(int a,int b){
+//         return (a>b)?a:b;
+//     }
+//     public double max(double a,double b){
+//         return (a>b)?a:b;
+//     }
+
+// }
+// public class Inherit {
+
+//     public static void main(String[] args) {
+//         Test t = new Test();
+//         System.out.println("Max of 10 and 20 is : "+ t.max(10,20));
+//         System.out.println("Max of 10.5 and 20.5 is : "+ t.max(10.5,20.5));
+//     }
+// }
+
+//Compiler decides at compile time which method to call based on the reference type and the parameters passed to the method. In above example when we call t.max(10,20) the compiler will look for a method with name max and parameters of type int and it will find the first method and it will call that method. When we call t.max(10.5,20.5) the compiler will look for a method with name max and parameters of type double and it will find the second method and it will call that method. This is how method overloading works.   
+//In method overloading the return type of the method can be different but it is not considered for method signature. The method signature consists of the method name and the parameters but not the return type. So we cannot overload a method based on return type alone. For example if we have two methods with same name and same parameters but different return type then it will result in compile time error because the compiler will not be able to decide which method to call based on the reference type and the parameters passed to the method.   
+//Overriding is achieved in different classes which are in inheritance relationship. The method in subclass must have the same name, return type and parameters as the method in superclass. The method in subclass must have the same or more accessibility than the method in superclass. The method in subclass cannot throw a checked exception if the method in superclass does not throw any exception or throws a different checked exception. The method in subclass can throw any unchecked exception regardless of the exceptions thrown by the method in superclass. For example if the method in superclass throws IOException then the method in subclass can throw NullPointerException because it is an unchecked exception. This is how method overriding works.
+//Overriding is resolved at runtime. The actual method which will be called at runtime is determined by the type of object which is referred by superclass reference. For example if we have a superclass reference which is referring to an object of subclass then at runtime the method of subclass will be called because the actual type of object is subclass. This is how dynamic method dispatch works. 
+
+
+
