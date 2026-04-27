@@ -48,15 +48,82 @@
 // }
 
 
-@FunctionalInterface
+// @FunctionalInterface
+// interface MyLambda{
+//     public int add(int a,int b);
+// }
+// public class LamExpressions {
+// public static void main(String[] args) {
+//     MyLambda m = (a,b)->a+b;
+//     System.out.println(m.add(20, 30));
+// }
+    
+// }
+
+//Can Lambda Expressions have local variables .
+//Can They Access Local Variable and Instance variable or not.
+
+
+// interface MyLambda
+// {
+//     public void dislay();
+// }
+// class Demo 
+// {
+//     int temp=0;
+//     //Lambda Expressions can aceess instance variable of class .
+//     //even if they are not final and it can modify them also.
+//     public void method1()
+//     {
+//         final int count =0;
+// //Lambda Expressions can access local variable or capture local variables only if they are final
+// //or never modify inside method.
+//         MyLambda ml= ()->{
+//             //Lambda Expressions can have their own variable.
+//             //And can use as much as it want to.
+//         //     int count =0;
+//         //    count++;
+//             System.out.println("hI");
+//             System.out.println("Bye"+count);     
+//             System.out.println(++temp);
+//         };
+        
+
+//     }
+// }
+// public class LamExpressions
+// {
+//     public static void main(String[] args) {
+//         Demo d = new Demo();
+//         d.method1();
+//     }
+// }
+
+
+//Can we pass Lambda Expressions as Parameters.
+
 interface MyLambda{
-    public int add(int a,int b);
+    public void display();
 }
-public class LamExpressions {
-public static void main(String[] args) {
-    MyLambda m = (a,b)->a+b;
-    System.out.println(m.add(20, 30));
-}
+class UseLambda
+{
+    public void callLambda(MyLambda ml){
+        ml.display();
+    }
     
 }
+class Demo
+{
+    public void method1()
+    {
+        UseLambda ul = new UseLambda();
+        ul.callLambda(()->{System.out.println("Hello");});
+    }
+}
+public class LamExpressions {
 
+    public static void main(String[] args) {
+        Demo d = new Demo();
+        d.method1();
+    }
+}
