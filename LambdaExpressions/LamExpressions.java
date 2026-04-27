@@ -102,28 +102,81 @@
 
 //Can we pass Lambda Expressions as Parameters.
 
-interface MyLambda{
-    public void display();
-}
-class UseLambda
-{
-    public void callLambda(MyLambda ml){
-        ml.display();
-    }
+// interface MyLambda{
+//     public void display();
+// }
+// class UseLambda
+// {
+//     public void callLambda(MyLambda ml){
+//         ml.display();
+//     }
     
-}
-class Demo
-{
-    public void method1()
-    {
-        UseLambda ul = new UseLambda();
-        ul.callLambda(()->{System.out.println("Hello");});
-    }
-}
-public class LamExpressions {
+// }
+// class Demo
+// {
+//     public void method1()
+//     {
+//         UseLambda ul = new UseLambda();
+//         ul.callLambda(()->{System.out.println("Hello");});
+//     }
+// }
+// public class LamExpressions {
 
+//     public static void main(String[] args) {
+//         Demo d = new Demo();
+//         d.method1();
+//     }
+// }/
+
+//Method Reference : Method references are also called using functional interface.
+// interface MyLambda
+// {
+//     public void display(String str);
+// }
+
+// public class LamExpressions{
+//     public static void reverse(String str) {
+//         StringBuffer sb = new StringBuffer(str);
+//         sb.reverse();
+//         System.err.println(sb);
+//     }
+//     public static void main(String[] args) {
+//         // MyLambda ml=System.out::println;
+//         // ml.display("hello");
+
+//         MyLambda Ml= LamExpressions::reverse;
+//         Ml.display("hello");
+//     }
+// }
+
+//Taking Constructor as method reference.
+// interface MyLambda
+// {
+//     public void display(String str);
+// }
+
+// public class LamExpressions{
+//     public LamExpressions(String s){
+//         System.out.println(s.toUpperCase());
+//     }
+//     public static void main(String[] args) {
+//        MyLambda ml=LamExpressions::new;
+//        ml.display("hello");
+//     }
+// }
+
+//Multiple Parameters.
+interface MyLambda
+{
+    public int display(String str1, String str2);
+}
+public class LamExpressions{
+    public LamExpressions(String s){
+        System.out.println(s.toUpperCase());
+    }
     public static void main(String[] args) {
-        Demo d = new Demo();
-        d.method1();
+        MyLambda ml = String::compareTo;
+      //  System.out.println(ml.display("hello","hello"));
+    System.out.println(ml.display("hellpo", "wellpo"));
     }
 }
