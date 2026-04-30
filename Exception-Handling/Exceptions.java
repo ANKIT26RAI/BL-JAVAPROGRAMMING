@@ -511,7 +511,7 @@
 
 //     static void Divide() throws Exception
 //     {
-//         try(FileInputStream fi= new FileInputStream("C:/Users/anky26/Test.txt");Scanner sc = new Scanner(fi));
+//         try(FileInputStream fi= new FileInputStream("C:\\Users\\anky2\\Test.txt");Scanner sc = new Scanner(fi))
 //     {
 //         int a = sc.nextInt();
 //         int b = sc.nextInt();
@@ -536,66 +536,66 @@
 //User defined Exception 
 //we will develop a class stackunderflow and stackoverflow 
 //define two classes and also override tostring method.and push and pop method.
-class StackOverFlowException extends Exception{
-    @Override
-    public String toString(){
-        return "StackOverFlowException: Stack is full! Cannot push more elements.";
-    }
-}
-class StackUnderFlowException extends Exception{
-    @Override
-    public String toString(){
-        return "StackUnderFlowException: Stack is empty! Cannot pop elements.";
-    }
-}
-class Stack {
-    int[] data;
-    int top;
-    int capacity;
-    Stack(int capacity){
-        this.capacity=capacity;
-        data= new int[capacity];
-        top=-1; //-1 means stack is empty.
-    }
+// class StackOverFlowException extends Exception{
+//     @Override
+//     public String toString(){
+//         return "StackOverFlowException: Stack is full! Cannot push more elements.";
+//     }
+// }
+// class StackUnderFlowException extends Exception{
+//     @Override
+//     public String toString(){
+//         return "StackUnderFlowException: Stack is empty! Cannot pop elements.";
+//     }
+// }
+// class Stack {
+//     int[] data;
+//     int top;
+//     int capacity;
+//     Stack(int capacity){
+//         this.capacity=capacity;
+//         data= new int[capacity];
+//         top=-1; //-1 means stack is empty.
+//     }
 
 
-void push(int value) throws StackOverFlowException{
-    if(top==capacity-1){
-        throw new StackOverFlowException();
-    }
-    data[++top]=value;
-    System.out.println(value + "pushed successfully.");
-}
-int pop() throws StackUnderFlowException{
-    if(top == -1){
-        throw new StackUnderFlowException();
-    }
-    int val = data[top--];
-    System.out.println(val + " popped successfully.");
-    return val;
-}
-}
-public class Exceptions {
-public static void main(String[] args) {
-    Stack s = new Stack(3);
-    try{
-        s.push(10);
-        s.push(20);
-        s.push(30);
-        s.push(40);
-    }catch(StackOverFlowException e){
-        System.out.println(e);
-    }
-    System.out.println("------------");
-    try {
-        s.pop();
-        s.pop();
-        s.pop();
-        s.pop();
-    } catch (StackUnderFlowException e) {
-        // TODO: handle exception
-        System.out.println(e);
-    }
-}
+// void push(int value) throws StackOverFlowException{
+//     if(top==capacity-1){
+//         throw new StackOverFlowException();
+//     }
+//     data[++top]=value;
+//     System.out.println(value + "pushed successfully.");
+// }
+// int pop() throws StackUnderFlowException{
+//     if(top == -1){
+//         throw new StackUnderFlowException();
+//     }
+//     int val = data[top--];
+//     System.out.println(val + " popped successfully.");
+//     return val;
+// }
+// }
+// public class Exceptions {
+// public static void main(String[] args) {
+//     Stack s = new Stack(3);
+//     try{
+//         s.push(10);
+//         s.push(20);
+//         s.push(30);
+//         s.push(40);
+//     }catch(StackOverFlowException e){
+//         System.out.println(e);
+//     }
+//     System.out.println("------------");
+//     try {
+//         s.pop();
+//         s.pop();
+//         s.pop();
+//         s.pop();
+//     } catch (StackUnderFlowException e) {
+//         // TODO: handle exception
+//         System.out.println(e);
+//     }
+// }
      
-}
+// }
