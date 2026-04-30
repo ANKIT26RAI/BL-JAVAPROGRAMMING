@@ -383,40 +383,53 @@ public class Generics {
 // }
 
 
-class MyArray<T>
-{
-    T A[] =(T[]) new Object[10];
+// class MyArray<T>
+// {
+//     T A[] =(T[]) new Object[10];
 
-    int length;
-    public void append(T v)
-    {
-        A[length++]=v;
-    }
-    public void display()
-    {
-        for(int i=0;i<length;i++){
-        System.out.println(A[i]);
-        }
-    }
-}
+//     int length;
+//     public void append(T v)
+//     {
+//         A[length++]=v;
+//     }
+//     public void display()
+//     {
+//         for(int i=0;i<length;i++){
+//         System.out.println(A[i]);
+//         }
+//     }
+// }
 
-public class Generics {
-static void fun(MyArray obj)
-{
-    obj.display();
-}
+// public class Generics {
+// static void fun(MyArray<? extends Number> obj)//wildcard.
+// {
+//     obj.display();
+// }
 
-    public static void main(String[] args) {
-   MyArray<String> ma = new MyArray<String>();
-   ma.append("hi");
-   ma.append("bye");
-   MyArray<Integer> ma2 = new MyArray<Integer>();
-   ma2.append(10);
-   ma2.append(20);
+//     public static void main(String[] args) {
+//    MyArray<String> ma = new MyArray<String>();
+//    ma.append("hi");
+//    ma.append("bye");
+//    MyArray<Integer> ma2 = new MyArray<Integer>();
+//    ma2.append(10);
+//    ma2.append(20);
 
-   fun(ma);
-   fun(ma2);
+//    fun(ma);
+//    fun(ma2);
     
-}
+// }
 
-}
+// }
+
+
+//Do's AND Dont's in Generics.
+/*
+1.Only extends is allowed in Generic Class definition.
+2.extends is used for interface also.
+3.extends from Only one class and multiple interfaces.
+4.extends and super are allowed with ? in methods.
+5.<?> will accept all types but cannot access.
+6.Base type of an Object should be same or ?.
+*/
+
+//---------------------WildCard.--------------
