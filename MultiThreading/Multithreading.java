@@ -170,4 +170,60 @@ Threads can have priorities that why java support multiple priorities.public cla
     Thread(ThreadGroup g, String name) //you can also have group of threads and include thread in that group.
     Thread(String name).
 
+
+    getxxx()/setxxx()
+    long getId()
+    String getName()
+    int getPriority()
+    Thread.state getState()
+    ThreadGroup getThreadGroup()
+
+    void setName(String name)
+    void setPriority(int P)
+    void setDaemon(boolean d)
+
+    --------------------Enquiry-----------------------
+    boolean isAlive()
+    boolean isDaemon()
+    boolean isInterrupted()
+
+    --------------Instance Methods--------------------
+    void interrupt()
+    void join()
+    void join(long millis)
+    void run()
+    void start()
+
+
+    ----------Static Methods----------------------------
+    int activeCount()
+    Thread currentThread()
+    void yeild()
+    void dumpStack()
+
+
     */
+
+  /*  public class Multithreading {
+    class MyRun implements Runnable{
+        public void run() {}
+    }
+        public static void main(String[] args) {
+            Thread t = new Thread(new MyRun(),"My Name");
+
+
+        }
+    }
+    */
+   class MyThreads extends Thread
+   {
+    
+   }
+
+    public class Multithreading {
+    
+        public static void main(String[] args) throws exception
+        {
+            
+        }
+    }
