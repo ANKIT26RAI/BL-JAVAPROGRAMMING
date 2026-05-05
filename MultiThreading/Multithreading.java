@@ -200,30 +200,53 @@ Threads can have priorities that why java support multiple priorities.public cla
     Thread currentThread()
     void yeild()
     void dumpStack()
+  */
+
+    // class MyRun implements Runnable
+    // {
+    //     public void run(){}
+    // }
+
+    // public class Multithreading {
+    
+    //     public static void main(String[] args) {
+    //         Thread t = new Thread(new MyRun());
+    //     }
+    // }
 
 
-    */
-
-  /*  public class Multithreading {
-    class MyRun implements Runnable{
-        public void run() {}
-    }
-        public static void main(String[] args) {
-            Thread t = new Thread(new MyRun(),"My Name");
-
+    class MyThread extends Thread
+    {
+        public MyThread(String name)
+        {
+            super(name);
+         //   setPriority(MAX_PRIORITY);
+        }
+        public void run(){
+            int count =1;
+            while (true) {
+                System.out.println(count++);
+                try {
+                    Thread.sleep(10);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    System.out.println(e);
+                }
+            }
 
         }
     }
-    */
-   class MyThreads extends Thread
-   {
-    
-   }
-
     public class Multithreading {
     
-        public static void main(String[] args) throws exception
-        {
-            
+        public static void main(String[] args) {
+            MyThread t= new MyThread("My thread 1");
+            t.start();
+            t.interrupt();
+            // System.out.println(t.getId());
+            // System.out.println(t.getName());
+            // System.out.println(t.getPriority());
+            // t.start();//i made thread run .
+            // System.out.println(t.getState());//bcz due to running of thread it will now show Runnable state.
+            // System.out.println(t.isAlive());
         }
     }
