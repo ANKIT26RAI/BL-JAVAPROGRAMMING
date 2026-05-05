@@ -253,39 +253,356 @@ Threads can have priorities that why java support multiple priorities.public cla
 
     */
 
-class MyThreads extends Thread 
-{
-    public void run(){
-        int count =1;
-        while (true) {
-            System.out.println(count++ + "My Thread");
+// class MyThreads extends Thread 
+// {
+//     public void run(){
+//         int count =1;
+//         while (true) {
+//             System.out.println(count++ + "My Thread");
+//         }
+//     }
+// }
+// public class Multithreading {
+
+//     public static void main(String[] args) {
+//         MyThreads t = new MyThreads();
+//         //t.setDaemon(true);
+//         t.start();
+
+//         // try {
+//         //     Thread.sleep(100);
+//         // } catch (Exception e) {
+//         //     // TODO: handle exception
+//         //     System.out.println(e);
+//         // }
+
+//         //Thread mainThread = Thread.currentThread();
+//         // try {
+//         //     mainThread.join();
+//         // } catch (Exception e) {
+//         //     // TODO: handle exception
+//         //     System.out.println(e);
+//         // }
+//         int count =1;
+//         while (true) {
+//             System.out.println(count++ + " Main");
+//         Thread.yield();
+//         }
+//     }
+// }
+
+
+
+//--------------------Synchronization-------------------------
+//1.Resource Sharing.
+//2.Critical Section.
+//3.Mutual Exclusion.
+//4.Locking/Mutex.
+//5.Semaphore.
+//6.Monitor.
+//7.Race Condition.
+//8.Inter Thread Communication.
+
+/*
+// 1. RESOURCE SHARING — Multiple threads accessing same variable/object
+int balance = 1000; // ← shared by all threads
+
+// 2. CRITICAL SECTION — Code block that accesses shared resource
+count++; // ← only one thread should run this at a time
+
+// 3. MUTUAL EXCLUSION — Only one thread in critical section at a time
+public synchronized void increment() { count++; }
+
+// 4. LOCKING/MUTEX — Mechanism that enforces mutual exclusion
+ReentrantLock lock = new ReentrantLock();
+lock.lock();   // acquire
+lock.unlock(); // release
+
+// 5. SEMAPHORE — Controls how many threads access a resource at once
+Semaphore sem = new Semaphore(3); // allows 3 threads simultaneously
+sem.acquire();
+sem.release();
+
+// 6. MONITOR — synchronized block using any object as a lock
+synchronized(obj) {
+    // only one thread at a time
+}
+
+// 7. RACE CONDITION — Bug when output depends on thread execution order
+count++; // ⚠️ two threads reading/writing same time = unpredictable result
+
+// 8. INTER-THREAD COMMUNICATION — Threads signaling each other
+obj.wait();        // release lock and wait
+obj.notify();      // wake up one waiting thread
+obj.notifyAll();   // wake up all waiting threads
+
+*/
+
+//------------------What is Monitor------------
+/* 
+A Monitor is an object that provides mutual exclusion + inter-thread communication together.
+Every Java Object has:
+┌────────────────────────────┐
+│         MONITOR            │
+│  ┌─────────────────────┐   │
+│  │   Mutex (Lock)      │   │  ← only 1 thread inside at a time
+│  └─────────────────────┘   │
+│  ┌─────────────────────┐   │
+│  │   Wait Set          │   │  ← threads waiting (called wait())
+│  └─────────────────────┘   │
+│  ┌─────────────────────┐   │
+│  │   Entry Set         │   │  ← threads trying to acquire lock
+│  └─────────────────────┘   │
+└────────────────────────────┘
+*/
+// class MyData
+// {
+//  synchronized   void display(String str)
+//     {
+//         for(int i=0;i<str.length();i++)
+//         {
+//             System.out.print(str.charAt(i));
+//     }
+//     }
+// }
+
+// class MyThread1 extends Thread
+// {
+//     MyData d;
+//     MyThread1(MyData d)
+//     {
+//         this.d= d;
+//     }
+//     public void run()
+//     {
+//         d.display("Hello World ");
+//     }
+
+// }
+
+// class MyThread2 extends Thread
+// {
+//     MyData data;
+//     MyThread2(MyData data){
+//         this.data=data;
+//     }
+//     public void run(){
+//         data.display("Welcome");
+//     }
+// }
+// public class Multithreading {
+
+//     public static void main(String[] args) {
+//         MyData d = new MyData();
+//         MyThread1 t1= new MyThread1(d);
+//         MyThread2 t2 = new MyThread2(d);
+//         t1.start();
+//         t2.start();
+//     }
+// }
+
+/* 
+//Student challenge ATM.
+
+class BankAccount {
+    private int balance = 10000;
+
+    public synchronized void withdraw(String person, int amount) {
+        System.out.println(person + " is checking balance...");
+
+        if (balance >= amount) {
+            System.out.println(person + " withdrawing " + amount);
+            
+            try { Thread.sleep(1000); }  // simulating ATM processing time
+            catch (InterruptedException e) {}
+
+            balance -= amount;
+            System.out.println(person + " ✅ Done! Remaining: " + balance);
+        } else {
+            System.out.println(person + " ❌ Insufficient balance: " + balance);
         }
     }
 }
+
+class ATMThread extends Thread {
+    BankAccount account;
+    String personName;
+    int amount;
+
+    ATMThread(BankAccount account, String personName, int amount) {
+        this.account = account;
+        this.personName=personName;
+        this.amount=amount;
+    }
+
+    public void run() {
+        System.out.println(personName + " is WAITING for ATM...");
+        account.withdraw(personName, amount);
+    }
+}
+
 public class Multithreading {
-
     public static void main(String[] args) {
-        MyThreads t = new MyThreads();
-        //t.setDaemon(true);
-        t.start();
+        BankAccount account = new BankAccount();
 
-        // try {
-        //     Thread.sleep(100);
-        // } catch (Exception e) {
-        //     // TODO: handle exception
-        //     System.out.println(e);
-        // }
+        ATMThread t1 = new ATMThread(account, "Ankit", 100000);
+        ATMThread t2 = new ATMThread(account, "Bob", 9000000);
+        ATMThread t3 = new ATMThread(account, "charlie", 8900000);
 
-        //Thread mainThread = Thread.currentThread();
-        // try {
-        //     mainThread.join();
-        // } catch (Exception e) {
-        //     // TODO: handle exception
-        //     System.out.println(e);
-        // }
-        int count =1;
-        while (true) {
-            System.out.println(count++ + " Main");
+        t1.start();
+        t2.start();
+        t3.start();
+    }
+}
+    */
+
+//-----------Inter-THREAD Communication.------------------
+
+Inter-Thread Communication allows threads to talk to each other.
+Used when one thread depends on another thread's result.
+
+3 Key Methods (must be inside synchronized block):
+┌─────────────────────────────────────────────────────┐
+│  wait()      → release lock + pause this thread     │
+│  notify()    → wake up ONE waiting thread           │
+│  notifyAll() → wake up ALL waiting threads          │
+└─────────────────────────────────────────────────────┘
+
+Demo — Basic Producer Consumer
+
+class Shared {
+    int data;
+    boolean hasData = false;
+
+    // Producer puts data
+    public synchronized void produce(int value) throws InterruptedException {
+        while (hasData) {
+            wait();           // ← wait if data not consumed yet
         }
+        data = value;
+        hasData = true;
+        System.out.println("Produced: " + value);
+        notify();             // ← wake consumer
+    }
+
+    // Consumer takes data
+    public synchronized void consume() throws InterruptedException {
+        while (!hasData) {
+            wait();           // ← wait if no data yet
+        }
+        System.out.println("Consumed: " + data);
+        hasData = false;
+        notify();             // ← wake producer
+    }
+}
+
+public class Demo {
+    public static void main(String[] args) {
+        Shared s = new Shared();
+
+        // Producer Thread
+        Thread producer = new Thread(() -> {
+            try {
+                for (int i = 1; i <= 5; i++) s.produce(i);
+            } catch (InterruptedException e) {}
+        });
+
+        // Consumer Thread
+        Thread consumer = new Thread(() -> {
+            try {
+                for (int i = 1; i <= 5; i++) s.consume();
+            } catch (InterruptedException e) {}
+        });
+
+        producer.start();
+        consumer.start();
+    }
+}
+
+
+//Student — Teacher Challenge
+📚 Scenario:
+   Teacher prepares a lesson → notifies Student
+   Student studies lesson   → notifies Teacher for next
+   Repeat for 5 lessons
+
+Lessons: ["Arrays", "Loops", "OOP", "Threads", "Collections"]
+
+
+class Classroom {
+    String lesson;
+    boolean lessonReady = false;
+
+    // TODO 1: Teacher prepares lesson (synchronized)
+    public _______ void teachLesson(String topic) throws InterruptedException {
+        // TODO 2: Wait if previous lesson not studied yet
+        while (_______) {
+            _______;
+        }
+        lesson = topic;
+        lessonReady = _______;
+        System.out.println("👨‍🏫 Teacher taught: " + topic);
+        // TODO 3: Notify student
+        _______;
+    }
+
+    // TODO 4: Student studies lesson (synchronized)
+    public _______ void studyLesson() throws InterruptedException {
+        // TODO 5: Wait if no lesson ready
+        while (_______) {
+            _______;
+        }
+        System.out.println("👨‍🎓 Student studied: " + lesson);
+        lessonReady = _______;
+        // TODO 6: Notify teacher
+        _______;
+    }
+}
+
+class Teacher extends Thread {
+    Classroom room;
+    String[] lessons = {"Arrays", "Loops", "OOP", "Threads", "Collections"};
+
+    Teacher(Classroom room) {
+        // TODO 7: initialize
+        _______;
+    }
+
+    public void run() {
+        try {
+            // TODO 8: loop through lessons and teach each
+            for (String lesson : _______) {
+                room._______(lesson);
+            }
+        } catch (InterruptedException e) {}
+    }
+}
+
+class Student extends Thread {
+    Classroom room;
+
+    Student(Classroom room) {
+        // TODO 9: initialize
+        _______;
+    }
+
+    public void run() {
+        try {
+            // TODO 10: study 5 lessons
+            for (int i = 0; i < _______; i++) {
+                room._______();
+            }
+        } catch (InterruptedException e) {}
+    }
+}
+
+public class School {
+    public static void main(String[] args) {
+        // TODO 11: Create classroom, teacher, student and start
+        Classroom room = _______;
+        Teacher t = _______;
+        Student s = _______;
+        _______;
+        _______;
     }
 }
