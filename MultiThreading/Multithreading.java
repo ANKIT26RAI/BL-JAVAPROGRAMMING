@@ -214,7 +214,7 @@ Threads can have priorities that why java support multiple priorities.public cla
     //     }
     // }
 
-
+/* 
     class MyThread extends Thread
     {
         public MyThread(String name)
@@ -250,3 +250,42 @@ Threads can have priorities that why java support multiple priorities.public cla
             // System.out.println(t.isAlive());
         }
     }
+
+    */
+
+class MyThreads extends Thread 
+{
+    public void run(){
+        int count =1;
+        while (true) {
+            System.out.println(count++ + "My Thread");
+        }
+    }
+}
+public class Multithreading {
+
+    public static void main(String[] args) {
+        MyThreads t = new MyThreads();
+        //t.setDaemon(true);
+        t.start();
+
+        // try {
+        //     Thread.sleep(100);
+        // } catch (Exception e) {
+        //     // TODO: handle exception
+        //     System.out.println(e);
+        // }
+
+        //Thread mainThread = Thread.currentThread();
+        // try {
+        //     mainThread.join();
+        // } catch (Exception e) {
+        //     // TODO: handle exception
+        //     System.out.println(e);
+        // }
+        int count =1;
+        while (true) {
+            System.out.println(count++ + " Main");
+        }
+    }
+}
