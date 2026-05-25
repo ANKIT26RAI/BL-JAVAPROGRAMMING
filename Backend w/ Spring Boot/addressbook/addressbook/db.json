@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "fullName": "Ankit Rai",
+    "email": "ankit@gmail.com",
+    "phoneNumber": "9876543210",
+    "address": "Gharroli",
+    "city": "Delhi",
+    "state": "Delhi",
+    "zipCode": "110096"
+  },
+  {
+    "id": 2,
+    "fullName": "Rahul Sharma",
+    "email": "rahul@gmail.com",
+    "phoneNumber": "9123456789",
+    "address": "Laxmi Nagar",
+    "city": "Delhi",
+    "state": "Delhi",
+    "zipCode": "110092"
+  }
+]
