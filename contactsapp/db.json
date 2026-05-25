@@ -1,0 +1,18 @@
+{
+  "contacts": [
+    {
+      "id": 1,
+      "name": "Ankit Rai",
+      "email": "ankit@gmail.com",
+      "phone": "9876543210",
+      "address": "India"
+    },
+    {
+      "id": 2,
+      "name": "Rahul Sharma",
+      "email": "rahul@gmail.com",
+      "phone": "9123456789",
+      "address": "Delhi"
+    }
+  ]
+}
