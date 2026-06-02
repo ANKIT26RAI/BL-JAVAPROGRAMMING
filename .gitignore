@@ -31,3 +31,17 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Fundoo Notes Secrets / Generated Files ###
+.env
+*.env
+
+logs/
+uploads/
+target/
+
+fundoo-notes/.env
+fundoo-notes/logs/
+fundoo-notes/uploads/
+fundoo-notes/target/
+fundoo-notes/target/
