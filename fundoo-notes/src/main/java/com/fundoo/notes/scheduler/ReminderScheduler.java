@@ -22,7 +22,8 @@ public class ReminderScheduler {
     @Scheduled(fixedRate = 60000)
     public void checkReminders() {
 
-        LocalDateTime now = LocalDateTime.now();
+        //LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(java.time.ZoneOffset.UTC).plusHours(5).plusMinutes(30);
 
         List<Note> reminderNotes =
                 noteRepository.findByReminderAtBeforeAndReminderSentFalseAndTrashedFalse(now);
