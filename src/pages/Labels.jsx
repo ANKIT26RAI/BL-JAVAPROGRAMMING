@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axiosConfig";
+import Sidebar from "../components/Sidebar";
+import Topnav from "../components/Topnav";
 
 function Labels() {
     const navigate = useNavigate();
-
     const [labels, setLabels] = useState([]);
     const [labelName, setLabelName] = useState("");
     const [selectedLabel, setSelectedLabel] = useState(null);
@@ -17,211 +18,78 @@ function Labels() {
             const response = await api.get("/api/labels");
             setLabels(response.data);
         } catch (error) {
-            console.log(error);
-            setMessage(
-                error.response?.data?.message ||
-                error.response?.data ||
-                "Failed to load labels."
-            );
+            setMessage(error.response?.data?.message || "Failed to load labels.");
         }
     };
 
-    useEffect(() => {
-        fetchLabels();
-    }, []);
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("message");
-        navigate("/login");
-    };
+    useEffect(() => { fetchLabels(); }, []);
 
     const handleCreateLabel = async (e) => {
         e.preventDefault();
-        setMessage("");
         setLoading(true);
-
         try {
-            const payload = {
-                name: labelName.trim(),
-            };
-
-            await api.post("/api/labels", payload);
-
+            await api.post("/api/labels", { name: labelName.trim() });
             setLabelName("");
-            setMessage("Label created successfully.");
+            setMessage("Label created.");
             await fetchLabels();
         } catch (error) {
-            console.log(error);
-            setMessage(
-                error.response?.data?.message ||
-                error.response?.data ||
-                "Failed to create label."
-            );
+            setMessage(error.response?.data?.message || "Failed to create label.");
         } finally {
             setLoading(false);
         }
     };
 
     const handleDeleteLabel = async (labelId) => {
-        const confirmDelete = window.confirm(
-            "Are you sure you want to delete this label?"
-        );
-
-        if (!confirmDelete) {
-            return;
-        }
-
+        if (!window.confirm("Delete this label?")) return;
         try {
             await api.delete(`/api/labels/${labelId}`);
-            setMessage("Label deleted successfully.");
-
-            if (selectedLabel?.id === labelId) {
-                setSelectedLabel(null);
-                setLabelNotes([]);
-            }
-
+            setMessage("Label deleted.");
+            if (selectedLabel?.id === labelId) { setSelectedLabel(null); setLabelNotes([]); }
             await fetchLabels();
         } catch (error) {
-            console.log(error);
-            setMessage(
-                error.response?.data?.message ||
-                error.response?.data ||
-                "Failed to delete label."
-            );
+            setMessage(error.response?.data?.message || "Failed to delete label.");
         }
     };
 
     const handleViewNotesByLabel = async (label) => {
-        setMessage("");
         setSelectedLabel(label);
-
         try {
             const response = await api.get(`/api/labels/${label.id}/notes`);
             setLabelNotes(response.data);
         } catch (error) {
-            console.log(error);
-            setMessage(
-                error.response?.data?.message ||
-                error.response?.data ||
-                "Failed to load notes for this label."
-            );
+            setMessage(error.response?.data?.message || "Failed to load notes.");
         }
     };
 
     return (
         <div className="app-layout">
-            <aside className="sidebar">
-                <h2>Fundoo</h2>
-
-                <nav>
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/dashboard")}
-                    >
-                        Notes
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/archive")}
-                    >
-                        Archive
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/trash")}
-                    >
-                        Trash
-                    </button>
-
-                    <button type="button" className="sidebar-link active">
-                        Labels
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/export")}
-                    >
-                        Export
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/payments")}
-                    >
-                        Payments
-                    </button>
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/attachments")}
-                    >
-                        Attachments
-                    </button>
-                </nav>
-            </aside>
-
+            <Topnav title="Labels" />
+            <Sidebar active="labels" />
             <main className="main-content">
-                <header className="topbar">
-                    <div>
-                        <h1>Labels</h1>
-                        <p>Create labels and view notes by category</p>
-                    </div>
-
-                    <button type="button" className="logout-btn" onClick={handleLogout}>
-                        Logout
-                    </button>
-                </header>
-
-                {message && <div className="dashboard-message">{message}</div>}
+                {message && <div className="dashboard-message" onClick={() => setMessage("")} style={{ cursor: "pointer" }}>{message}</div>}
 
                 <section className="labels-layout">
                     <div className="labels-panel">
+                        <h2 style={{ fontSize: "16px", fontWeight: "500", marginBottom: "16px", color: "#202124" }}>Labels</h2>
                         <form className="label-form" onSubmit={handleCreateLabel}>
-                            <input
-                                type="text"
-                                placeholder="Create new label"
-                                value={labelName}
-                                onChange={(e) => setLabelName(e.target.value)}
-                                required
-                            />
-
+                            <input type="text" placeholder="New label name" value={labelName} onChange={(e) => setLabelName(e.target.value)} required />
                             <button type="submit" className="primary-small-btn" disabled={loading}>
-                                {loading ? "Creating..." : "Create"}
+                                {loading ? "..." : <i className="ti ti-plus"></i>}
                             </button>
                         </form>
 
                         <div className="labels-list">
                             {labels.length === 0 ? (
-                                <div className="empty-state small-empty">No labels found.</div>
+                                <p style={{ color: "#5f6368", fontSize: "14px", padding: "8px" }}>No labels yet</p>
                             ) : (
-                                labels.map((label) => (
-                                    <div
-                                        className={`label-item ${
-                                            selectedLabel?.id === label.id ? "selected-label" : ""
-                                        }`}
-                                        key={label.id}
-                                    >
-                                        <button
-                                            type="button"
-                                            onClick={() => handleViewNotesByLabel(label)}
-                                        >
+                                labels.map(label => (
+                                    <div className={`label-item ${selectedLabel?.id === label.id ? "selected-label" : ""}`} key={label.id}>
+                                        <i className="ti ti-tag" style={{ fontSize: "16px", color: "#5f6368" }} aria-hidden="true"></i>
+                                        <button type="button" onClick={() => handleViewNotesByLabel(label)}>
                                             {label.name}
                                         </button>
-
-                                        <button
-                                            type="button"
-                                            className="label-delete-btn"
-                                            onClick={() => handleDeleteLabel(label.id)}
-                                        >
-                                            Delete
+                                        <button type="button" className="label-delete-btn" onClick={() => handleDeleteLabel(label.id)}>
+                                            <i className="ti ti-trash" style={{ fontSize: "16px" }}></i>
                                         </button>
                                     </div>
                                 ))
@@ -230,28 +98,27 @@ function Labels() {
                     </div>
 
                     <div className="label-notes-panel">
-                        <h2>
-                            {selectedLabel
-                                ? `Notes under "${selectedLabel.name}"`
-                                : "Select a label to view notes"}
+                        <h2 style={{ fontSize: "16px", fontWeight: "500", marginBottom: "16px" }}>
+                            {selectedLabel ? `"${selectedLabel.name}" notes` : "Select a label"}
                         </h2>
 
-                        <section className="notes-grid label-notes-grid">
+                        <section className="notes-grid">
                             {!selectedLabel ? (
-                                <div className="empty-state">Select any label from left side.</div>
+                                <div className="empty-state">
+                                    <i className="ti ti-tag"></i>
+                                    <p>Select a label to view notes</p>
+                                </div>
                             ) : labelNotes.length === 0 ? (
-                                <div className="empty-state">No notes found for this label.</div>
+                                <div className="empty-state">
+                                    <i className="ti ti-notes-off"></i>
+                                    <p>No notes with this label</p>
+                                </div>
                             ) : (
-                                labelNotes.map((note) => (
+                                labelNotes.map(note => (
                                     <div className="note-card" key={note.id}>
-                                        <h3>{note.title}</h3>
+                                        {note.title && <h3>{note.title}</h3>}
                                         <p>{note.description}</p>
-
-                                        <div className="note-meta">
-                                            {note.pinned && <span>Pinned </span>}
-                                            {note.archived && <span>Archived </span>}
-                                            {note.reminderAt && <span>Reminder: {note.reminderAt}</span>}
-                                        </div>
+                                        {note.pinned && <span className="note-label-chip" style={{ marginTop: "8px" }}>📌 Pinned</span>}
                                     </div>
                                 ))
                             )}
