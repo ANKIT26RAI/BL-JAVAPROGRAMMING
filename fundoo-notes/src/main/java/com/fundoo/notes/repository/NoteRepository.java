@@ -23,6 +23,7 @@ public interface NoteRepository extends JpaRepository<Note, Long> {
     Optional<Note> findByIdAndUser(Long id, User user);
 
     List<Note> findByReminderAtBeforeAndReminderSentFalseAndTrashedFalse(LocalDateTime now);
+    List<Note> findByUserAndTrashedFalseAndArchivedFalse(User user);
 
     @Query("""
             SELECT n FROM Note n
