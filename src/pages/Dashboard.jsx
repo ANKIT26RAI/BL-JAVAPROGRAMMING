@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axiosConfig";
-
+import Sidebar from "../components/Sidebar";
+import Topnav from "../components/Topnav";
 function Dashboard() {
     const navigate = useNavigate();
 
