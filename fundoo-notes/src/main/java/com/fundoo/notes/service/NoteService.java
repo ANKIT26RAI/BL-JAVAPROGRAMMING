@@ -29,7 +29,7 @@ public class NoteService {
     }
 
     public List<Note> getAllNotes(User user) {
-        return noteRepository.findByUserAndTrashedFalse(user);
+return noteRepository.findByUserAndTrashedFalseAndArchivedFalse(user);
     }
 
     public Note getNoteById(Long id, User user) {
