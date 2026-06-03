@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axiosConfig";
+import Sidebar from "../components/Sidebar";
+import Topnav from "../components/Topnav";
 
 function Payments() {
     const navigate = useNavigate();
-
     const [paymentStatus, setPaymentStatus] = useState(null);
     const [orderDetails, setOrderDetails] = useState(null);
     const [message, setMessage] = useState("");
@@ -13,55 +14,28 @@ function Payments() {
 
     const fetchPaymentStatus = async () => {
         setLoadingStatus(true);
-        setMessage("");
-
         try {
             const response = await api.get("/api/payments/status");
             setPaymentStatus(response.data);
         } catch (error) {
-            console.log(error);
-            setMessage(
-                error.response?.data?.message ||
-                error.response?.data ||
-                "Failed to load payment status."
-            );
+            setMessage(error.response?.data?.message || "Failed to load payment status.");
         } finally {
             setLoadingStatus(false);
         }
     };
 
-    useEffect(() => {
-        fetchPaymentStatus();
-    }, []);
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("message");
-        navigate("/login");
-    };
+    useEffect(() => { fetchPaymentStatus(); }, []);
 
     const handleCreateOrder = async () => {
         setMessage("");
         setOrderDetails(null);
         setCreatingOrder(true);
-
         try {
-            const payload = {
-                amount: 19900,
-                planName: "PREMIUM_MONTHLY",
-            };
-
-            const response = await api.post("/api/payments/create-order", payload);
-
+            const response = await api.post("/api/payments/create-order", { amount: 19900, planName: "PREMIUM_MONTHLY" });
             setOrderDetails(response.data);
             setMessage("Razorpay order created successfully.");
         } catch (error) {
-            console.log(error);
-            setMessage(
-                error.response?.data?.message ||
-                error.response?.data ||
-                "Failed to create Razorpay order."
-            );
+            setMessage(error.response?.data?.message || "Failed to create order.");
         } finally {
             setCreatingOrder(false);
         }
@@ -69,186 +43,78 @@ function Payments() {
 
     return (
         <div className="app-layout">
-            <aside className="sidebar">
-                <h2>Fundoo</h2>
-
-                <nav>
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/dashboard")}
-                    >
-                        Notes
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/archive")}
-                    >
-                        Archive
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/trash")}
-                    >
-                        Trash
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/labels")}
-                    >
-                        Labels
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/export")}
-                    >
-                        Export
-                    </button>
-
-                    <button type="button" className="sidebar-link active">
-                        Payments
-                    </button>
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/attachments")}
-                    >
-                        Attachments
-                    </button>
-                </nav>
-            </aside>
-
+            <Topnav title="Payments" />
+            <Sidebar active="payments" />
             <main className="main-content">
-                <header className="topbar">
-                    <div>
-                        <h1>Payments</h1>
-                        <p>Manage your subscription and premium access</p>
-                    </div>
-
-                    <button type="button" className="logout-btn" onClick={handleLogout}>
-                        Logout
-                    </button>
-                </header>
-
-                {message && <div className="dashboard-message">{message}</div>}
+                {message && <div className="dashboard-message" onClick={() => setMessage("")} style={{ cursor: "pointer" }}>{message}</div>}
 
                 <section className="payment-layout">
                     <div className="payment-card">
-                        <h2>Current Plan</h2>
-
+                        <h2 style={{ fontSize: "18px", fontWeight: "400", marginBottom: "16px" }}>Current Plan</h2>
                         {loadingStatus ? (
-                            <p>Loading payment status...</p>
+                            <p style={{ color: "#5f6368" }}>Loading...</p>
                         ) : paymentStatus ? (
                             <>
-                                <div
-                                    className={`plan-badge ${
-                                        paymentStatus.premium ? "premium-plan" : "free-plan"
-                                    }`}
-                                >
-                                    {paymentStatus.premium ? "PREMIUM" : "FREE"}
+                                <div className={`plan-badge ${paymentStatus.premium ? "premium-plan" : "free-plan"}`}>
+                                    {paymentStatus.premium ? "⭐ PREMIUM" : "FREE"}
                                 </div>
-
-                                <div className="payment-info">
-                                    <p>
-                                        <strong>Premium:</strong>{" "}
-                                        {paymentStatus.premium ? "Yes" : "No"}
-                                    </p>
-
-                                    <p>
-                                        <strong>Subscription Plan:</strong>{" "}
-                                        {paymentStatus.subscriptionPlan || "FREE"}
-                                    </p>
-
-                                    <p>
-                                        <strong>Start Date:</strong>{" "}
-                                        {paymentStatus.subscriptionStartDate || "Not started"}
-                                    </p>
-
-                                    <p>
-                                        <strong>End Date:</strong>{" "}
-                                        {paymentStatus.subscriptionEndDate || "Not available"}
-                                    </p>
+                                <div style={{ display: "grid", gap: "10px", fontSize: "14px", marginBottom: "16px" }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #f1f3f4", paddingBottom: "8px" }}>
+                                        <span style={{ color: "#5f6368" }}>Plan</span>
+                                        <span style={{ fontWeight: "500" }}>{paymentStatus.subscriptionPlan || "FREE"}</span>
+                                    </div>
+                                    <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #f1f3f4", paddingBottom: "8px" }}>
+                                        <span style={{ color: "#5f6368" }}>Start Date</span>
+                                        <span>{paymentStatus.subscriptionStartDate || "—"}</span>
+                                    </div>
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                        <span style={{ color: "#5f6368" }}>End Date</span>
+                                        <span>{paymentStatus.subscriptionEndDate || "—"}</span>
+                                    </div>
                                 </div>
-
-                                <button
-                                    type="button"
-                                    className="refresh-btn"
-                                    onClick={fetchPaymentStatus}
-                                >
-                                    Refresh Status
+                                <button type="button" className="refresh-btn" onClick={fetchPaymentStatus}>
+                                    <i className="ti ti-refresh" style={{ marginRight: "6px" }}></i>Refresh
                                 </button>
                             </>
                         ) : (
-                            <p>No payment status found.</p>
+                            <p style={{ color: "#5f6368" }}>No payment status found.</p>
                         )}
                     </div>
 
                     <div className="payment-card">
-                        <h2>Premium Plan</h2>
-
-                        <p className="plan-price">₹199 / month</p>
-
+                        <h2 style={{ fontSize: "18px", fontWeight: "400", marginBottom: "8px" }}>Premium Plan</h2>
+                        <p className="plan-price">₹199 <span style={{ fontSize: "16px", color: "#5f6368", fontWeight: "400" }}>/ month</span></p>
                         <ul className="premium-features">
                             <li>Unlimited notes</li>
                             <li>Excel export access</li>
                             <li>Advanced reminders</li>
                             <li>Premium badge</li>
                         </ul>
-
-                        <button
-                            type="button"
-                            className="primary-small-btn payment-btn"
-                            onClick={handleCreateOrder}
-                            disabled={creatingOrder}
-                        >
-                            {creatingOrder ? "Creating Order..." : "Create Razorpay Order"}
+                        <button type="button" className="payment-btn" onClick={handleCreateOrder} disabled={creatingOrder}>
+                            {creatingOrder ? "Creating..." : "Upgrade to Premium"}
                         </button>
-
-                        <p className="payment-note">
-                            This creates a Razorpay test order from backend. Real payment
-                            verification requires Razorpay Checkout frontend response.
-                        </p>
+                        <p className="payment-note">Test mode — uses Razorpay test credentials.</p>
                     </div>
                 </section>
 
                 {orderDetails && (
-                    <section className="order-details-card">
-                        <h2>Created Order Details</h2>
-
+                    <div className="order-details-card" style={{ maxWidth: "600px", marginTop: "20px" }}>
+                        <h2 style={{ fontSize: "16px", fontWeight: "500", marginBottom: "16px" }}>Order Created</h2>
                         <div className="order-grid">
-                            <p>
-                                <strong>Order ID:</strong> {orderDetails.orderId}
-                            </p>
-
-                            <p>
-                                <strong>Amount:</strong> ₹{orderDetails.amount / 100}
-                            </p>
-
-                            <p>
-                                <strong>Currency:</strong> {orderDetails.currency}
-                            </p>
-
-                            <p>
-                                <strong>Plan:</strong> {orderDetails.planName}
-                            </p>
-
-                            <p>
-                                <strong>Key ID:</strong> {orderDetails.keyId}
-                            </p>
-
-                            <p>
-                                <strong>Message:</strong> {orderDetails.message}
-                            </p>
+                            {[
+                                ["Order ID", orderDetails.orderId],
+                                ["Amount", `₹${orderDetails.amount / 100}`],
+                                ["Currency", orderDetails.currency],
+                                ["Plan", orderDetails.planName],
+                                ["Key ID", orderDetails.keyId],
+                            ].map(([label, value]) => (
+                                <div key={label} style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #f1f3f4", paddingBottom: "8px", fontSize: "14px" }}>
+                                    <span style={{ color: "#5f6368" }}>{label}</span>
+                                    <span style={{ fontWeight: "500", wordBreak: "break-all", maxWidth: "60%", textAlign: "right" }}>{value}</span>
+                                </div>
+                            ))}
                         </div>
-                    </section>
+                    </div>
                 )}
             </main>
         </div>
