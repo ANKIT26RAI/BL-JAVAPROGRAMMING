@@ -77,9 +77,9 @@ public class ExcelExportService {
                 );
             }
 
-            for (int i = 0; i <= 9; i++) {
-                sheet.autoSizeColumn(i);
-            }
+        // for (int i = 0; i <= 9; i++) {
+        //   sheet.autoSizeColumn(i);
+        //}
 
             workbook.write(outputStream);
 
