@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axiosConfig";
+import Sidebar from "../components/Sidebar";
+import Topnav from "../components/Topnav";
 
 function Attachments() {
     const navigate = useNavigate();
-
     const [notes, setNotes] = useState([]);
     const [noteId, setNoteId] = useState("");
     const [file, setFile] = useState(null);
     const [attachments, setAttachments] = useState([]);
-
     const [message, setMessage] = useState("");
     const [uploading, setUploading] = useState(false);
     const [loadingAttachments, setLoadingAttachments] = useState(false);
@@ -19,106 +19,45 @@ function Attachments() {
             const response = await api.get("/api/notes");
             setNotes(response.data);
         } catch (error) {
-            console.log(error);
-            setMessage(
-                error.response?.data?.message ||
-                error.response?.data ||
-                "Failed to load notes."
-            );
+            setMessage(error.response?.data?.message || "Failed to load notes.");
         }
     };
 
-    useEffect(() => {
-        fetchNotes();
-    }, []);
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("message");
-        navigate("/login");
-    };
+    useEffect(() => { fetchNotes(); }, []);
 
     const handleNoteChange = async (e) => {
         const selectedNoteId = e.target.value;
         setNoteId(selectedNoteId);
         setAttachments([]);
-        setMessage("");
-
         if (selectedNoteId) {
-            await fetchAttachmentsByNoteId(selectedNoteId);
+            setLoadingAttachments(true);
+            try {
+                const response = await api.get(`/api/attachments/notes/${selectedNoteId}`);
+                setAttachments(response.data);
+            } catch (error) {
+                setMessage(error.response?.data?.message || "Failed to load attachments.");
+            } finally {
+                setLoadingAttachments(false);
+            }
         }
-    };
-
-    const fetchAttachmentsByNoteId = async (selectedNoteId) => {
-        setLoadingAttachments(true);
-        setMessage("");
-
-        try {
-            const response = await api.get(`/api/attachments/notes/${selectedNoteId}`);
-            setAttachments(response.data);
-        } catch (error) {
-            console.log(error);
-            setMessage(
-                error.response?.data?.message ||
-                error.response?.data ||
-                "Failed to load attachments."
-            );
-        } finally {
-            setLoadingAttachments(false);
-        }
-    };
-
-    const fetchAttachments = async () => {
-        if (!noteId) {
-            setMessage("Please select a note first.");
-            return;
-        }
-
-        await fetchAttachmentsByNoteId(noteId);
     };
 
     const handleUploadAttachment = async (e) => {
         e.preventDefault();
-
-        if (!noteId) {
-            setMessage("Please select a note.");
-            return;
-        }
-
-        if (!file) {
-            setMessage("Please choose a file.");
-            return;
-        }
-
+        if (!noteId || !file) { setMessage("Please select a note and file."); return; }
         setUploading(true);
-        setMessage("");
-
         try {
             const formData = new FormData();
             formData.append("file", file);
-
-            await api.post(`/api/attachments/notes/${noteId}`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-
+            await api.post(`/api/attachments/notes/${noteId}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
             setFile(null);
-
-            const fileInput = document.getElementById("attachment-file-input");
-            if (fileInput) {
-                fileInput.value = "";
-            }
-
-            setMessage("Attachment uploaded successfully.");
-            await fetchAttachments();
+            const fi = document.getElementById("attachment-file-input");
+            if (fi) fi.value = "";
+            setMessage("Uploaded successfully.");
+            const response = await api.get(`/api/attachments/notes/${noteId}`);
+            setAttachments(response.data);
         } catch (error) {
-            console.log(error);
-            setMessage(
-                error.response?.data?.message ||
-                error.response?.data ||
-                "Failed to upload attachment."
-            );
+            setMessage(error.response?.data?.message || "Failed to upload.");
         } finally {
             setUploading(false);
         }
@@ -126,223 +65,108 @@ function Attachments() {
 
     const handleDownloadAttachment = async (attachment) => {
         try {
-            const response = await api.get(
-                `/api/attachments/download/${attachment.id}`,
-                {
-                    responseType: "blob",
-                }
-            );
-
-            const fileBlob = new Blob([response.data], {
-                type: attachment.fileType || "application/octet-stream",
-            });
-
+            const response = await api.get(`/api/attachments/download/${attachment.id}`, { responseType: "blob" });
+            const fileBlob = new Blob([response.data], { type: attachment.fileType || "application/octet-stream" });
             const downloadUrl = window.URL.createObjectURL(fileBlob);
-
             const link = document.createElement("a");
             link.href = downloadUrl;
             link.download = attachment.fileName || "attachment";
             document.body.appendChild(link);
             link.click();
-
             link.remove();
             window.URL.revokeObjectURL(downloadUrl);
-
-            setMessage("Attachment downloaded successfully.");
         } catch (error) {
-            console.log(error);
-            setMessage(
-                error.response?.data?.message ||
-                error.response?.data ||
-                "Failed to download attachment."
-            );
+            setMessage(error.response?.data?.message || "Failed to download.");
         }
     };
 
     const handleDeleteAttachment = async (attachmentId) => {
-        const confirmDelete = window.confirm(
-            "Are you sure you want to delete this attachment?"
-        );
-
-        if (!confirmDelete) {
-            return;
-        }
-
+        if (!window.confirm("Delete this attachment?")) return;
         try {
             await api.delete(`/api/attachments/${attachmentId}`);
-            setMessage("Attachment deleted successfully.");
-            await fetchAttachments();
+            setMessage("Attachment deleted.");
+            const response = await api.get(`/api/attachments/notes/${noteId}`);
+            setAttachments(response.data);
         } catch (error) {
-            console.log(error);
-            setMessage(
-                error.response?.data?.message ||
-                error.response?.data ||
-                "Failed to delete attachment."
-            );
+            setMessage(error.response?.data?.message || "Failed to delete.");
         }
+    };
+
+    const formatSize = (bytes) => {
+        if (!bytes) return "—";
+        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+        return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
     };
 
     return (
         <div className="app-layout">
-            <aside className="sidebar">
-                <h2>Fundoo</h2>
-
-                <nav>
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/dashboard")}
-                    >
-                        Notes
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/archive")}
-                    >
-                        Archive
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/trash")}
-                    >
-                        Trash
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/labels")}
-                    >
-                        Labels
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/export")}
-                    >
-                        Export
-                    </button>
-
-                    <button
-                        type="button"
-                        className="sidebar-link"
-                        onClick={() => navigate("/payments")}
-                    >
-                        Payments
-                    </button>
-
-                    <button type="button" className="sidebar-link active">
-                        Attachments
-                    </button>
-                </nav>
-            </aside>
-
+            <Topnav title="Attachments" />
+            <Sidebar active="attachments" />
             <main className="main-content">
-                <header className="topbar">
-                    <div>
-                        <h1>Attachments</h1>
-                        <p>Select a note and manage its attachments</p>
-                    </div>
-
-                    <button type="button" className="logout-btn" onClick={handleLogout}>
-                        Logout
-                    </button>
-                </header>
-
-                {message && <div className="dashboard-message">{message}</div>}
+                {message && <div className="dashboard-message" onClick={() => setMessage("")} style={{ cursor: "pointer" }}>{message}</div>}
 
                 <section className="attachment-layout">
                     <div className="attachment-card">
-                        <h2>Upload Attachment</h2>
-
+                        <h2 style={{ fontSize: "16px", fontWeight: "500", marginBottom: "20px" }}>Upload File</h2>
                         <form onSubmit={handleUploadAttachment}>
                             <div className="form-group">
                                 <label>Select Note</label>
                                 <select value={noteId} onChange={handleNoteChange} required>
-                                    <option value="">Select a note</option>
-
-                                    {notes.map((note) => (
-                                        <option key={note.id} value={note.id}>
-                                            {note.title}
-                                        </option>
+                                    <option value="">Choose a note...</option>
+                                    {notes.map(note => (
+                                        <option key={note.id} value={note.id}>{note.title}</option>
                                     ))}
                                 </select>
                             </div>
-
                             <div className="form-group">
-                                <label>Select File</label>
-                                <input
-                                    id="attachment-file-input"
-                                    type="file"
-                                    onChange={(e) => setFile(e.target.files[0])}
-                                    required
-                                />
+                                <label>Choose File</label>
+                                <input id="attachment-file-input" type="file" onChange={(e) => setFile(e.target.files[0])} required />
                             </div>
-
-                            <button
-                                type="submit"
-                                className="primary-small-btn attachment-btn"
-                                disabled={uploading}
-                            >
+                            <button type="submit" className="primary-small-btn attachment-btn" disabled={uploading}>
+                                <i className="ti ti-upload" style={{ marginRight: "6px" }}></i>
                                 {uploading ? "Uploading..." : "Upload File"}
                             </button>
                         </form>
                     </div>
 
                     <div className="attachment-card">
-                        <h2>View Attachments</h2>
-
+                        <h2 style={{ fontSize: "16px", fontWeight: "500", marginBottom: "8px" }}>Attachments</h2>
                         <p className="attachment-help">
-                            Select a note from the dropdown. Attachments will load
-                            automatically.
+                            {noteId ? `${attachments.length} attachment(s)` : "Select a note to view attachments"}
                         </p>
 
-                        <button
-                            type="button"
-                            className="refresh-btn"
-                            onClick={fetchAttachments}
-                            disabled={loadingAttachments}
-                        >
-                            {loadingAttachments ? "Loading..." : "Refresh Attachments"}
-                        </button>
-
                         <div className="attachments-list">
-                            {!noteId ? (
-                                <div className="empty-state small-empty">
-                                    Select a note to view attachments.
+                            {loadingAttachments ? (
+                                <p style={{ color: "#5f6368", fontSize: "14px" }}>Loading...</p>
+                            ) : !noteId ? (
+                                <div className="empty-state" style={{ padding: "32px" }}>
+                                    <i className="ti ti-paperclip" style={{ fontSize: "48px" }}></i>
+                                    <p style={{ fontSize: "14px" }}>No note selected</p>
                                 </div>
                             ) : attachments.length === 0 ? (
-                                <div className="empty-state small-empty">
-                                    No attachments found for this note.
+                                <div className="empty-state" style={{ padding: "32px" }}>
+                                    <i className="ti ti-file-off" style={{ fontSize: "48px" }}></i>
+                                    <p style={{ fontSize: "14px" }}>No attachments</p>
                                 </div>
                             ) : (
-                                attachments.map((attachment) => (
+                                attachments.map(attachment => (
                                     <div className="attachment-item" key={attachment.id}>
-                                        <div>
-                                            <h3>{attachment.fileName}</h3>
-                                            <p>{attachment.fileType}</p>
-                                            <p>{attachment.fileSize} bytes</p>
+                                        <div style={{ display: "flex", alignItems: "center", gap: "12px", flex: 1 }}>
+                                            <div style={{ width: "40px", height: "40px", background: "#e8f0fe", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                <i className="ti ti-file" style={{ fontSize: "20px", color: "#1a73e8" }}></i>
+                                            </div>
+                                            <div>
+                                                <h3>{attachment.fileName}</h3>
+                                                <p>{attachment.fileType} • {formatSize(attachment.fileSize)}</p>
+                                            </div>
                                         </div>
-
                                         <div className="attachment-actions">
-                                            <button
-                                                type="button"
-                                                onClick={() => handleDownloadAttachment(attachment)}
-                                            >
-                                                Download
+                                            <button type="button" onClick={() => handleDownloadAttachment(attachment)} title="Download">
+                                                <i className="ti ti-download"></i>
                                             </button>
-
-                                            <button
-                                                type="button"
-                                                className="danger-btn"
-                                                onClick={() => handleDeleteAttachment(attachment.id)}
-                                            >
-                                                Delete
+                                            <button type="button" className="danger-btn" onClick={() => handleDeleteAttachment(attachment.id)} title="Delete">
+                                                <i className="ti ti-trash"></i>
                                             </button>
                                         </div>
                                     </div>
