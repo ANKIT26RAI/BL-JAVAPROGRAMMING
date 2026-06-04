@@ -136,7 +136,7 @@ input, textarea, select { font-family: inherit; }
   flex-direction: column;
 }
 
-/* ── TOP NAVBAR (Google Keep style) ── */
+/* ── TOP NAVBAR ── */
 .topnav {
   position: fixed;
   top: 0;
@@ -167,9 +167,7 @@ input, textarea, select { font-family: inherit; }
   color: #5f6368;
 }
 
-.topnav-logo .logo-dot {
-  color: #fbbc04;
-}
+.topnav-logo .logo-dot { color: #fbbc04; }
 
 .topnav-search {
   flex: 1;
@@ -189,10 +187,7 @@ input, textarea, select { font-family: inherit; }
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-.topnav-search i {
-  color: #5f6368;
-  font-size: 20px;
-}
+.topnav-search i { color: #5f6368; font-size: 20px; }
 
 .topnav-search input {
   flex: 1;
@@ -296,14 +291,8 @@ input, textarea, select { font-family: inherit; }
 }
 
 .sidebar:hover .sidebar-link span { opacity: 1; }
-
 .sidebar-link:hover { background: #f1f3f4; }
-
-.sidebar-link.active {
-  background: #fef0c7;
-  color: #202124;
-}
-
+.sidebar-link.active { background: #fef0c7; color: #202124; }
 .sidebar-link.active i { color: #e37400; }
 
 /* ── MAIN CONTENT ── */
@@ -380,9 +369,7 @@ input, textarea, select { font-family: inherit; }
   flex: 1;
 }
 
-.create-note-footer input[type="datetime-local"]:focus {
-  border-color: #1a73e8;
-}
+.create-note-footer input[type="datetime-local"]:focus { border-color: #1a73e8; }
 
 .btn-close-note {
   border: none;
@@ -446,9 +433,7 @@ input, textarea, select { font-family: inherit; }
   border-color: transparent;
 }
 
-.note-card.pinned {
-  border-color: #fbbc04;
-}
+.note-card.pinned { border-color: #fbbc04; }
 
 .note-card h3 {
   font-size: 14px;
@@ -567,7 +552,7 @@ input, textarea, select { font-family: inherit; }
   font-weight: 500;
 }
 
-/* Edit mode inside card */
+/* Edit mode */
 .edit-input,
 .edit-textarea {
   width: 100%;
@@ -614,7 +599,6 @@ input, textarea, select { font-family: inherit; }
 
 .btn-cancel:hover { background: #f1f3f4; }
 
-/* Note meta */
 .note-meta {
   font-size: 11px;
   color: #5f6368;
@@ -647,15 +631,8 @@ input, textarea, select { font-family: inherit; }
   gap: 16px;
 }
 
-.empty-state i {
-  font-size: 96px;
-  color: #e0e0e0;
-}
-
-.empty-state p {
-  font-size: 22px;
-  color: #5f6368;
-}
+.empty-state i { font-size: 96px; color: #e0e0e0; }
+.empty-state p { font-size: 22px; color: #5f6368; }
 
 /* ── LABELS PAGE ── */
 .labels-layout {
@@ -691,7 +668,6 @@ input, textarea, select { font-family: inherit; }
 }
 
 .label-form input:focus { border-color: #1a73e8; }
-
 .labels-list { display: flex; flex-direction: column; gap: 4px; }
 
 .label-item {
@@ -835,7 +811,6 @@ input, textarea, select { font-family: inherit; }
 }
 
 .attachment-help { color: #5f6368; font-size: 14px; margin-bottom: 12px; }
-
 .attachments-list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
 
 .attachment-item {
@@ -851,8 +826,8 @@ input, textarea, select { font-family: inherit; }
 
 .attachment-item h3 { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
 .attachment-item p { font-size: 12px; color: #5f6368; }
-
 .attachment-actions { display: flex; gap: 8px; }
+
 .attachment-actions button {
   border: none;
   background: #e8f0fe;
@@ -898,10 +873,7 @@ input, textarea, select { font-family: inherit; }
   font-size: 14px;
 }
 
-.search-form button[type="submit"] {
-  color: #1a73e8;
-  font-weight: 500;
-}
+.search-form button[type="submit"] { color: #1a73e8; font-weight: 500; }
 
 /* ── PAGE HEADER ── */
 .page-header {
@@ -932,7 +904,7 @@ input, textarea, select { font-family: inherit; }
 
 .logout-btn:hover { background: #f1f3f4; }
 
-/* ── TOPBAR (kept for non-dashboard pages) ── */
+/* ── TOPBAR ── */
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -941,12 +913,7 @@ input, textarea, select { font-family: inherit; }
   max-width: 1200px;
 }
 
-.topbar h1 {
-  font-family: 'Google Sans', sans-serif;
-  font-size: 22px;
-  font-weight: 400;
-}
-
+.topbar h1 { font-family: 'Google Sans', sans-serif; font-size: 22px; font-weight: 400; }
 .topbar p { color: #5f6368; font-size: 14px; margin-top: 2px; }
 
 /* ── SMALL EMPTY ── */
@@ -957,9 +924,84 @@ input, textarea, select { font-family: inherit; }
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .topnav-logo { min-width: 160px; }
-  .sidebar { display: none; }
-  .main-content { margin-left: 0; padding: 16px; }
+  .topnav { padding: 0 12px; }
+  .topnav-logo span { font-size: 18px; }
+  .topnav-search { max-width: 100%; }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding: 12px !important;
+    padding-bottom: 80px !important;
+  }
+
+  .create-note-card {
+    max-width: 100%;
+    margin: 0 0 20px 0;
+  }
+
+  .notes-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .labels-layout,
+  .attachment-layout,
+  .payment-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  /* Bottom navigation bar */
+  .sidebar {
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    height: 56px !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #fff !important;
+    border-top: 1px solid #e0e0e0 !important;
+    border-right: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    z-index: 100 !important;
+    overflow: visible !important;
+  }
+
+  .sidebar-link {
+    flex-direction: column !important;
+    width: auto !important;
+    height: 56px !important;
+    padding: 6px 8px !important;
+    border-radius: 0 !important;
+    gap: 2px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+
+  .sidebar-link span {
+    opacity: 1 !important;
+    font-size: 10px !important;
+  }
+
+  .sidebar-link i { font-size: 18px !important; }
+
+  .sidebar:hover {
+    width: 100% !important;
+    background: #fff !important;
+  }
+}
+
+@media (max-width: 400px) {
   .notes-grid { grid-template-columns: 1fr; }
-  .labels-layout, .attachment-layout, .payment-layout { grid-template-columns: 1fr; }
-  .topbar { flex-direction: column; align-items: flex-start; gap: 12px; }
 }
